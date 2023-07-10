@@ -16,14 +16,11 @@ const BASE_URL = "https://meme-api.com/gimme/ProgrammerHumor/50";
 const PostContainer = styled.div`
   display: flex;
   width: 600px;
+  max-width: 100vw;
   flex-direction: column;
   margin-top: 1rem;
   margin-bottom: 2rem;
   transition: 0.3s;
-
-  @media (max-width: 700px) {
-    width: 100%;
-  }
 `;
 
 const PostHeader = styled.div`
@@ -73,6 +70,9 @@ const PostCaption = styled.div`
   font-weight: 400;
   margin-top: 1rem;
   margin-bottom: 0.5rem;
+  width: 500px;
+  max-width: 90vw;
+  overflow-wrap: break-word;
 
   @media (max-width: 700px) {
     padding: 0 0.5rem;
@@ -94,10 +94,7 @@ const PostFooter = styled.div`
   gap: 1rem;
 
   @media (max-width: 700px) {
-    padding-left: 1rem;
-    padding-right: 1rem;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+    padding: 1rem 1rem 1rem 1rem;
   }
 `;
 
@@ -115,6 +112,9 @@ const HeartIcon = styled(FaRegHeart)`
     color: gray;
     cursor: pointer;
   }
+  &:active {
+    transform: scale(0.9);
+  }
 `;
 const CommentIcon = styled(FaRegComment)`
   height: 25px;
@@ -123,6 +123,9 @@ const CommentIcon = styled(FaRegComment)`
   &:hover {
     color: gray;
     cursor: pointer;
+  }
+  &:active {
+    transform: scale(0.9);
   }
 `;
 
@@ -135,6 +138,9 @@ const ShareIcon = styled(FiSend)`
     color: gray;
     cursor: pointer;
   }
+  &:active {
+    transform: scale(0.9);
+  }
 `;
 const SaveIcon = styled(FaRegBookmark)`
   height: 25px;
@@ -144,6 +150,10 @@ const SaveIcon = styled(FaRegBookmark)`
   &:hover {
     color: gray;
     cursor: pointer;
+  }
+
+  &:active {
+    transform: scale(0.9);
   }
 `;
 const LikeCount = styled.p`
@@ -207,6 +217,7 @@ const Post = () => {
             </PostMenuBtn>
           </PostHeader>
           <PostCaption>{meme.title}</PostCaption>
+          {console.log(meme.title)}
           <PostMedia src={`${meme.url}`} />
           <PostFooter>
             <IconWrapper>
