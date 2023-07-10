@@ -9,7 +9,7 @@ import {
   Logo,
   ListItem,
   ListItemText,
-} from "../StyledComponents/FromStyledComponents";
+} from "../StyledComponents/SidebarStyledComponents";
 
 const iconstyle = {
   height: "24px",
