@@ -19,11 +19,20 @@ import {
   SaveIcon,
   LikeCount,
 } from "../StyledComponents/PostsStyledComponents";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  showCommentDialog,
+  getCommentSelectors,
+} from "../redux/slices/commentSlice";
 
-const BASE_URL = "https://meme-api.com/gimme/ProgrammerHumor/50";
+const BASE_URL = "https://meme-api.com/gimme/CityPorn/50";
 
 const Post = () => {
   const [posts, setPosts] = useState([]);
+  const isCommentsVisible = useSelector(getCommentSelectors);
+  const dispatch = useDispatch();
+
+  console.log(isCommentsVisible);
 
   useEffect(() => {
     axios.get(BASE_URL).then((response) => {
@@ -54,6 +63,10 @@ const Post = () => {
     return `${date} at ${time}`;
   };
 
+  const commentClickHandler = () => {
+    dispatch(showCommentDialog());
+  };
+
   if (posts.length === 0) {
     return <h3>No Memes available!</h3>;
   } else {
@@ -77,7 +90,6 @@ const Post = () => {
             </PostMenuBtn>
           </PostHeader>
           <PostCaption>{meme.title}</PostCaption>
-          {console.log(meme.title)}
           <PostMedia src={`${meme.url}`} />
           <PostFooter>
             <IconWrapper>
@@ -85,7 +97,7 @@ const Post = () => {
               <LikeCount>{meme.ups}</LikeCount>
             </IconWrapper>
             <IconWrapper>
-              <CommentIcon />
+              <CommentIcon onClick={commentClickHandler} />
               <LikeCount>{8}</LikeCount>
             </IconWrapper>
             <IconWrapper>

@@ -20,9 +20,10 @@ export const SideBarContainer = styled.div`
     top: auto;
     bottom: 0;
     flex-direction: row;
+    align-items: center;
     height: 70px;
     width: 100vw;
-    padding: 0.5rem 1rem;
+    padding: 1rem 1rem;
     background-color: black;
   }
 `;
