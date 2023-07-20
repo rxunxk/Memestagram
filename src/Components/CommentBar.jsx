@@ -17,7 +17,7 @@ const CommentBar = ({ comment }) => {
         <UserIcon height={35} width={35} mr={0.5} />
         <FlexBox style={{ flexDirection: "column" }}>
           <p style={{ fontWeight: "bold" }}>{comment.author}</p>
-          <p>{comment.comment}</p>
+          <p style={{ marginRight: "0.8rem" }}>{comment.comment}</p>
         </FlexBox>
       </FlexBox>
       <FlexBox>

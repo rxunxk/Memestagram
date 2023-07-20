@@ -85,7 +85,7 @@ const Post = () => {
             <PostMedia src={`${meme.url}`} />
             <PostFooter>
               <IconWrapper>
-                <HeartIcon />
+                <HeartIcon height={25} width={25} />
                 <LikeCount>{meme.ups}</LikeCount>
               </IconWrapper>
               <IconWrapper>
@@ -98,7 +98,7 @@ const Post = () => {
                 <LikeCount>{8}</LikeCount>
               </IconWrapper>
               <IconWrapper>
-                <ShareIcon />
+                <ShareIcon height={25} width={25} />
               </IconWrapper>
               <SaveIcon />
             </PostFooter>

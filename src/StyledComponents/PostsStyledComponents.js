@@ -94,12 +94,8 @@ export const IconWrapper = styled.div`
 `;
 
 export const HeartIcon = styled(FaRegHeart)`
-  height: ${(props) => {
-    props.height;
-  }}px;
-  width: ${(props) => {
-    props.width;
-  }}px;
+  height: ${(props) => props.height}px;
+  width: ${(props) => props.width}px;
 
   &:hover {
     color: gray;
