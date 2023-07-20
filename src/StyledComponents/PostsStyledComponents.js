@@ -94,8 +94,12 @@ export const IconWrapper = styled.div`
 `;
 
 export const HeartIcon = styled(FaRegHeart)`
-  height: 25px;
-  width: 25px;
+  height: ${(props) => {
+    props.height;
+  }}px;
+  width: ${(props) => {
+    props.width;
+  }}px;
 
   &:hover {
     color: gray;
@@ -120,8 +124,8 @@ export const CommentIcon = styled(FaRegComment)`
 
 export const ShareIcon = styled(FiSend)`
   padding-top: 0.1rem;
-  height: 25px;
-  width: 25px;
+  height: ${(props) => props.height}px;
+  width: ${(props) => props.width}px;
 
   &:hover {
     color: gray;
