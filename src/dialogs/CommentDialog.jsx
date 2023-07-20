@@ -22,6 +22,80 @@ const comments = [
       "make teach pair forgotten driving stage pool below available television girl greatest check mice speak team extra think task butter bite forest present pocket",
     likes: 17,
   },
+  {
+    author: "Rena",
+    comment:
+      "trunk kill offer guide mile done sister slight completely stay trouble frequently sink voyage experience south arm famous swim select stopped safety notice court",
+    likes: 54,
+  },
+  {
+    author: "raunak",
+    comment: "this is a comment",
+    likes: 78,
+  },
+  {
+    author: "Verna",
+    comment:
+      "make teach pair forgotten driving stage pool below available television girl greatest check mice speak team extra think task butter bite forest present pocket",
+    likes: 17,
+  },
+  {
+    author: "Rena",
+    comment:
+      "trunk kill offer guide mile done sister slight completely stay trouble frequently sink voyage experience south arm famous swim select stopped safety notice court",
+    likes: 54,
+  },
+  {
+    author: "raunak",
+    comment: "this is a comment",
+    likes: 78,
+  },
+  {
+    author: "Verna",
+    comment:
+      "make teach pair forgotten driving stage pool below available television girl greatest check mice speak team extra think task butter bite forest present pocket",
+    likes: 17,
+  },
+  {
+    author: "Rena",
+    comment:
+      "trunk kill offer guide mile done sister slight completely stay trouble frequently sink voyage experience south arm famous swim select stopped safety notice court",
+    likes: 54,
+  },
+  {
+    author: "raunak",
+    comment: "this is a comment",
+    likes: 78,
+  },
+  {
+    author: "Verna",
+    comment:
+      "make teach pair forgotten driving stage pool below available television girl greatest check mice speak team extra think task butter bite forest present pocket",
+    likes: 17,
+  },
+  {
+    author: "Rena",
+    comment:
+      "trunk kill offer guide mile done sister slight completely stay trouble frequently sink voyage experience south arm famous swim select stopped safety notice court",
+    likes: 54,
+  },
+  {
+    author: "raunak",
+    comment: "this is a comment",
+    likes: 78,
+  },
+  {
+    author: "Verna",
+    comment:
+      "make teach pair forgotten driving stage pool below available television girl greatest check mice speak team extra think task butter bite forest present pocket",
+    likes: 17,
+  },
+  {
+    author: "Rena",
+    comment:
+      "trunk kill offer guide mile done sister slight completely stay trouble frequently sink voyage experience south arm famous swim select stopped safety notice court",
+    likes: 54,
+  },
 ];
 
 // eslint-disable-next-line no-unused-vars
@@ -72,7 +146,7 @@ const CommentDialog = ({ post, open, setOpen }) => {
               flexDirection: "row",
               alignItems: "center",
               justifyContent: "flex-start",
-              padding: "0.5rem 1rem",
+              padding: "1rem 1rem",
             },
           }}
         >

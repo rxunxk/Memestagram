@@ -6,7 +6,7 @@ export const CommentBarContainer = styled.div`
 `;
 
 export const CommentInput = styled.input`
-  padding: 0.8rem 1rem;
+  padding: 1rem 1rem;
   border-radius: 30px;
   font-size: 1rem;
   outline: none;
