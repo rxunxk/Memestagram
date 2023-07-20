@@ -19,20 +19,15 @@ import {
   SaveIcon,
   LikeCount,
 } from "../StyledComponents/PostsStyledComponents";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  showCommentDialog,
-  getCommentSelectors,
-} from "../redux/slices/commentSlice";
+import CommentDialog from "../dialogs/CommentDialog";
 
 const BASE_URL = "https://meme-api.com/gimme/CityPorn/50";
 
+let postComponent = "";
 const Post = () => {
   const [posts, setPosts] = useState([]);
-  const isCommentsVisible = useSelector(getCommentSelectors);
-  const dispatch = useDispatch();
-
-  console.log(isCommentsVisible);
+  const [showComments, setShowComments] = useState(false);
+  const [currentPost, setCurrentPost] = useState({});
 
   useEffect(() => {
     axios.get(BASE_URL).then((response) => {
@@ -63,52 +58,67 @@ const Post = () => {
     return `${date} at ${time}`;
   };
 
-  const commentClickHandler = () => {
-    dispatch(showCommentDialog());
-  };
-
-  if (posts.length === 0) {
-    return <h3>No Memes available!</h3>;
+  if (posts?.length === 0) {
+    postComponent = <h3>No Posts available!</h3>;
   } else {
-    return posts.map((meme, index) => {
+    postComponent = posts?.map((meme, index) => {
       return (
-        <PostContainer key={meme.author + index}>
-          <PostHeader>
-            <UserIcon
-              isOnline={false}
-              isStory={false}
-              height={40}
-              width={40}
-              mr={1}
-            />
-            <PostAuthorNTime>
-              <PostAuthor>{meme.author}</PostAuthor>
-              <PostTime>{getRandomDateAndTime()}</PostTime>
-            </PostAuthorNTime>
-            <PostMenuBtn>
-              <FaEllipsisH />
-            </PostMenuBtn>
-          </PostHeader>
-          <PostCaption>{meme.title}</PostCaption>
-          <PostMedia src={`${meme.url}`} />
-          <PostFooter>
-            <IconWrapper>
-              <HeartIcon />
-              <LikeCount>{meme.ups}</LikeCount>
-            </IconWrapper>
-            <IconWrapper>
-              <CommentIcon onClick={commentClickHandler} />
-              <LikeCount>{8}</LikeCount>
-            </IconWrapper>
-            <IconWrapper>
-              <ShareIcon />
-            </IconWrapper>
-            <SaveIcon />
-          </PostFooter>
-        </PostContainer>
+        <>
+          <PostContainer key={meme.author + index}>
+            <PostHeader>
+              <UserIcon
+                isOnline={false}
+                isStory={false}
+                height={40}
+                width={40}
+                mr={1}
+              />
+              <PostAuthorNTime>
+                <PostAuthor>{meme.author}</PostAuthor>
+                <PostTime>{getRandomDateAndTime()}</PostTime>
+              </PostAuthorNTime>
+              <PostMenuBtn>
+                <FaEllipsisH />
+              </PostMenuBtn>
+            </PostHeader>
+            <PostCaption>{meme.title}</PostCaption>
+            <PostMedia src={`${meme.url}`} />
+            <PostFooter>
+              <IconWrapper>
+                <HeartIcon />
+                <LikeCount>{meme.ups}</LikeCount>
+              </IconWrapper>
+              <IconWrapper>
+                <CommentIcon
+                  onClick={() => {
+                    setCurrentPost(meme);
+                    setShowComments(true);
+                  }}
+                />
+                <LikeCount>{8}</LikeCount>
+              </IconWrapper>
+              <IconWrapper>
+                <ShareIcon />
+              </IconWrapper>
+              <SaveIcon />
+            </PostFooter>
+          </PostContainer>
+        </>
       );
     });
   }
+
+  return (
+    <>
+      <CommentDialog
+        open={showComments}
+        setOpen={setShowComments}
+        post={currentPost}
+        key={Math.random()}
+      />
+      {postComponent}
+    </>
+  );
 };
 
 export default Post;
