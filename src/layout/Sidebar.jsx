@@ -10,6 +10,7 @@ import {
   ListItem,
   ListItemText,
 } from "../StyledComponents/SidebarStyledComponents";
+import { useNavigate } from "react-router-dom";
 
 const iconstyle = {
   height: "24px",
@@ -20,6 +21,7 @@ const iconstyle = {
 
 const Sidebar = () => {
   const [isSmallScreen, setIsSmallScreen] = useState(false);
+  const navigate = useNavigate();
 
   function updateScreenSize() {
     const isSmall = window.matchMedia("(max-width: 1300px)").matches;
@@ -40,31 +42,59 @@ const Sidebar = () => {
     <>
       <SideBarContainer>
         <Logo>{isSmallScreen ? "M" : "Memestagram"}</Logo>
-        <ListItem>
+        <ListItem
+          onClick={() => {
+            navigate("/Home");
+          }}
+        >
           <AiFillHome style={iconstyle} />
           <ListItemText>Home</ListItemText>
         </ListItem>
-        <ListItem>
+        <ListItem
+          onClick={() => {
+            navigate("/Chat");
+          }}
+        >
           <FaFacebookMessenger style={iconstyle} />
           <ListItemText>Chat</ListItemText>
         </ListItem>
-        <ListItem>
+        <ListItem
+          onClick={() => {
+            navigate("/Profile");
+          }}
+        >
           <CgProfile style={iconstyle} />
           <ListItemText>Profile</ListItemText>
         </ListItem>
-        <ListItem>
+        <ListItem
+          onClick={() => {
+            navigate("/Create");
+          }}
+        >
           <BiImageAdd style={iconstyle} />
           <ListItemText>Create</ListItemText>
         </ListItem>
-        <ListItem>
+        <ListItem
+          onClick={() => {
+            navigate("/Notifications");
+          }}
+        >
           <AiOutlineHeart style={iconstyle} />
           <ListItemText>Notifications</ListItemText>
         </ListItem>
-        <ListItem>
+        <ListItem
+          onClick={() => {
+            navigate("/Settings");
+          }}
+        >
           <AiFillSetting style={iconstyle} />
           <ListItemText>Settings</ListItemText>
         </ListItem>
-        <ListItem>
+        <ListItem
+          onClick={() => {
+            navigate("/");
+          }}
+        >
           <FiLogOut style={{ ...iconstyle, color: "salmon" }} />
           <ListItemText>Logout</ListItemText>
         </ListItem>
