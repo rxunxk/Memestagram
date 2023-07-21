@@ -2,6 +2,7 @@ import Sidebar from "../layout/Sidebar";
 import styled from "@emotion/styled";
 import Stories from "../Components/Stories";
 import Posts from "../Components/Posts";
+import BottomNavBar from "../layout/BottomNavBar";
 
 const HomeContainer = styled.div`
   height: 100dvh;
@@ -18,9 +19,10 @@ const Home = () => {
   return (
     <>
       <HomeContainer>
+        <Sidebar />
         <Stories />
         <Posts />
-        <Sidebar />
+        <BottomNavBar />
       </HomeContainer>
     </>
   );

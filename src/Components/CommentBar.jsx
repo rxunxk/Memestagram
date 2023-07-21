@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 // import { CommentBarContainer } from "../StyledComponents/CommentBarStyledComponents";
-import { FlexBox } from "../StyledComponents/GlobalStyledComponents";
+import { FlexBox } from "../StyledComponents/GlobalSC";
 import UserIcon from "./UserIcon";
 import { HeartIcon } from "../StyledComponents/PostsStyledComponents";
 
