@@ -16,7 +16,7 @@ export const SideBarContainer = styled.div`
     width: 80px;
   }
 
-  @media (max-width: 766px) {
+  @media (max-width: 786px) {
     top: auto;
     bottom: 0;
     flex-direction: row;
@@ -35,7 +35,7 @@ export const Logo = styled.div`
   padding-left: 0.5rem;
   transition: 0.5s;
 
-  @media (max-width: 766px) {
+  @media (max-width: 786px) {
     display: none;
   }
 `;
@@ -66,6 +66,9 @@ export const ListItem = styled.div`
     border-radius: 0;
     &:hover {
       background-color: transparent;
+    }
+    @media (max-width: 786px) {
+      margin: 0;
     }
   }
 `;

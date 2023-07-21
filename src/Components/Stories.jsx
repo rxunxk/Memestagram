@@ -53,8 +53,8 @@ const Stories = () => {
         <Story>
           <UserIcon
             isOnline={false}
-            height={75}
-            width={75}
+            height={70}
+            width={70}
             mr={1}
             isStory={true}
           />
@@ -65,8 +65,8 @@ const Stories = () => {
             <Story key={name}>
               <UserIcon
                 isOnline={false}
-                height={75}
-                width={75}
+                height={70}
+                width={70}
                 mr={1}
                 isStory={true}
               />

@@ -18,9 +18,9 @@ const Home = () => {
   return (
     <>
       <HomeContainer>
-        <Sidebar />
         <Stories />
         <Posts />
+        <Sidebar />
       </HomeContainer>
     </>
   );
