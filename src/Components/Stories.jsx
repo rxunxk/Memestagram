@@ -16,7 +16,7 @@ const SuggestedProfileNames = [
 const StoriesContainer = styled.div`
   display: flex;
   width: 630px;
-  height: 100px;
+  height: 120px;
   padding: 0.5rem;
   margin-top: 2rem;
   margin-bottom: 1rem;
@@ -24,6 +24,10 @@ const StoriesContainer = styled.div`
   flex-shrink: 0;
   transition: 0.3s;
   scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
   @media (max-width: 700px) {
     width: 100%;
@@ -49,20 +53,20 @@ const Stories = () => {
         <Story>
           <UserIcon
             isOnline={false}
-            height={55}
-            width={55}
+            height={75}
+            width={75}
             mr={1}
             isStory={true}
           />
           <StoryAuthor>Raunak Pandey</StoryAuthor>
         </Story>
-        {SuggestedProfileNames.map((name) => {
+        {SuggestedProfileNames?.map((name) => {
           return (
             <Story key={name}>
               <UserIcon
                 isOnline={false}
-                height={55}
-                width={55}
+                height={75}
+                width={75}
                 mr={1}
                 isStory={true}
               />
