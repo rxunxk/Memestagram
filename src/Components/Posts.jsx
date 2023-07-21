@@ -20,8 +20,9 @@ import {
   LikeCount,
 } from "../StyledComponents/PostsStyledComponents";
 import CommentDialog from "../dialogs/CommentDialog";
+import Suggestions from "../layout/Suggestions";
 
-const BASE_URL = "https://meme-api.com/gimme/CityPorn/50";
+const BASE_URL = "https://meme-api.com/gimme/GymMemes/50";
 
 let postComponent = "";
 const Post = () => {
@@ -116,7 +117,17 @@ const Post = () => {
         post={currentPost}
         key={Math.random()}
       />
-      {postComponent}
+      <div style={{ display: "flex", position: "relative" }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          {postComponent}
+        </div>
+        <Suggestions />
+      </div>
     </>
   );
 };

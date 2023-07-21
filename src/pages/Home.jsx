@@ -1,6 +1,5 @@
 import Sidebar from "../layout/Sidebar";
 import styled from "@emotion/styled";
-import Suggestions from "../layout/Suggestions";
 import Stories from "../Components/Stories";
 import Posts from "../Components/Posts";
 
@@ -22,7 +21,6 @@ const Home = () => {
         <Sidebar />
         <Stories />
         <Posts />
-        <Suggestions />
       </HomeContainer>
     </>
   );
