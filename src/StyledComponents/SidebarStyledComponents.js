@@ -17,14 +17,7 @@ export const SideBarContainer = styled.div`
   }
 
   @media (max-width: 786px) {
-    top: auto;
-    bottom: 0;
-    flex-direction: row;
-    align-items: center;
-    height: 70px;
-    width: 100vw;
-    padding: 1rem 1rem;
-    background-color: black;
+    display: none;
   }
 `;
 
@@ -34,10 +27,6 @@ export const Logo = styled.div`
   margin: 1rem 0;
   padding-left: 0.5rem;
   transition: 0.5s;
-
-  @media (max-width: 786px) {
-    display: none;
-  }
 `;
 
 export const ListItem = styled.div`
@@ -66,9 +55,6 @@ export const ListItem = styled.div`
     border-radius: 0;
     &:hover {
       background-color: transparent;
-    }
-    @media (max-width: 786px) {
-      margin: 0;
     }
   }
 `;
