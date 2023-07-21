@@ -1,10 +1,10 @@
-import RouterPaths from "./RouterPaths";
 import "./App.css";
+import Navigation from "./routes/navigation";
 
 function App() {
   return (
     <div className="app">
-      <RouterPaths />
+      <Navigation />
     </div>
   );
 }
