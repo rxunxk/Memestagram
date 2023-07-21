@@ -7,6 +7,10 @@ const SuggestedProfileNames = [
   "Earl Elliott",
   "Eugenia Crawford",
   "Lottie Allison",
+  "Lily Mann",
+  "Russell Hardy",
+  "Katie Hernandez",
+  "Samuel Chandler",
 ];
 
 const StoriesContainer = styled.div`
@@ -19,6 +23,7 @@ const StoriesContainer = styled.div`
   overflow-x: scroll;
   flex-shrink: 0;
   transition: 0.3s;
+  scrollbar-width: none;
 
   @media (max-width: 700px) {
     width: 100%;

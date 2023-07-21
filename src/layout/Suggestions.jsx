@@ -13,8 +13,8 @@ const SuggestionsContainer = styled.div`
   height: 100dvh;
   width: 330px;
   position: absolute;
-  top: 0;
-  right: 0;
+  top: -0.1%;
+  left: 110%;
   padding: 2.5rem 1.5rem;
   border-left: 1px solid #333333;
   display: flex;
