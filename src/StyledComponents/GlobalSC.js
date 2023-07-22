@@ -70,6 +70,7 @@ export const SettingsIcon = styled(AiFillSetting)`
 
 export const PageContainer = styled.div`
   height: 100dvh;
+  height: 100svh;
   width: 100dvw;
   display: flex;
   flex-direction: column;
