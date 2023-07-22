@@ -22,7 +22,7 @@ import {
 import CommentDialog from "../dialogs/CommentDialog";
 import Suggestions from "../layout/Suggestions";
 
-const BASE_URL = "https://meme-api.com/gimme/GymMemes/50";
+const BASE_URL = "https://meme-api.com/gimme/memes/50";
 
 let postComponent = "";
 const Post = () => {

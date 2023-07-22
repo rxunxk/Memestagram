@@ -21,7 +21,7 @@ export const SideBarContainer = styled.div`
   }
 `;
 
-export const Logo = styled.div`
+export const SbarLogo = styled.div`
   font-family: "logo-font";
   font-size: 1.8rem;
   margin: 1rem 0;

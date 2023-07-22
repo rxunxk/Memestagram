@@ -6,7 +6,7 @@ import { FaFacebookMessenger } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import {
   SideBarContainer,
-  Logo,
+  SbarLogo,
   ListItem,
   ListItemText,
 } from "../StyledComponents/SidebarStyledComponents";
@@ -41,7 +41,7 @@ const Sidebar = () => {
   return (
     <>
       <SideBarContainer>
-        <Logo>{isSmallScreen ? "M" : "Memestagram"}</Logo>
+        <SbarLogo>{isSmallScreen ? "M" : "Memestagram"}</SbarLogo>
         <ListItem
           onClick={() => {
             navigate("/Home");

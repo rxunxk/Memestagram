@@ -67,3 +67,14 @@ export const SettingsIcon = styled(AiFillSetting)`
     transform: scale(0.9);
   }
 `;
+
+export const PageContainer = styled.div`
+  height: 100dvh;
+  width: 100dvw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: black;
+  color: white;
+  overflow-y: scroll;
+`;

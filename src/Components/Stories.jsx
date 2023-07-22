@@ -31,6 +31,7 @@ const StoriesContainer = styled.div`
 
   @media (max-width: 700px) {
     width: 100%;
+    margin-top: 0.2rem;
   }
 `;
 
