@@ -40,6 +40,7 @@ const Story = styled.div`
   flex-direction: column;
   align-items: center;
   width: 80px;
+  flex-shrink: 0;
 `;
 
 const StoryAuthor = styled.p`
