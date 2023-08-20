@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import { AiFillSetting, AiFillHome, AiOutlineHeart } from "react-icons/ai";
 import { CgProfile } from "react-icons/cg";
 import { FiLogOut } from "react-icons/fi";
@@ -11,6 +12,15 @@ import {
   ListItemText,
 } from "../StyledComponents/SidebarStyledComponents";
 import { useNavigate } from "react-router-dom";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 
 const iconstyle = {
   height: "24px",
@@ -21,6 +31,8 @@ const iconstyle = {
 
 const Sidebar = () => {
   const [isSmallScreen, setIsSmallScreen] = useState(false);
+  const [logoutDialog, setLogoutDialog] = useState(false);
+
   const navigate = useNavigate();
 
   function updateScreenSize() {
@@ -40,6 +52,33 @@ const Sidebar = () => {
 
   return (
     <>
+      <Dialog open={logoutDialog} onOpenChange={setLogoutDialog}>
+        <DialogContent className="bg-black text-white border-[#27272a]">
+          <DialogHeader>
+            <DialogTitle className="text-base">
+              Are you sure you want to log out?
+            </DialogTitle>
+            <DialogDescription>
+              Logging out will end your current session and you'll be redirected
+              to the login page. If you have any unsaved changes, make sure to
+              save them before logging out. Are you sure you want to proceed?
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button
+              type="submit"
+              className="bg-black border-0 text-red-400"
+              onClick={() => {
+                localStorage.removeItem("currentUser");
+                navigate("/");
+              }}
+            >
+              Log out
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
       <SideBarContainer>
         <SbarLogo>{isSmallScreen ? "M" : "Memestagram"}</SbarLogo>
         <ListItem
@@ -92,7 +131,7 @@ const Sidebar = () => {
         </ListItem>
         <ListItem
           onClick={() => {
-            navigate("/");
+            setLogoutDialog(true);
           }}
         >
           <FiLogOut style={{ ...iconstyle, color: "salmon" }} />

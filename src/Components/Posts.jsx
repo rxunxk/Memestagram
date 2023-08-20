@@ -1,7 +1,6 @@
 import UserIcon from "./UserIcon";
 import { FaEllipsisH } from "react-icons/fa";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import {
   PostContainer,
   PostHeader,
@@ -21,18 +20,19 @@ import {
 } from "../StyledComponents/PostsStyledComponents";
 import CommentDialog from "../dialogs/CommentDialog";
 import Suggestions from "../layout/Suggestions";
-
-const BASE_URL = "https://meme-api.com/gimme/memes/50";
+import { getPosts } from "../util/postApi";
 
 let postComponent = "";
+
 const Post = () => {
   const [posts, setPosts] = useState([]);
   const [showComments, setShowComments] = useState(false);
   const [currentPost, setCurrentPost] = useState({});
 
   useEffect(() => {
-    axios.get(BASE_URL).then((response) => {
-      setPosts(response.data.memes);
+    getPosts().then((res) => {
+      console.log(res.data);
+      setPosts(res.data);
     });
   }, []);
 
@@ -83,11 +83,11 @@ const Post = () => {
               </PostMenuBtn>
             </PostHeader>
             <PostCaption>{meme.title}</PostCaption>
-            <PostMedia src={`${meme.url}`} />
+            <PostMedia src={`${meme.img}`} />
             <PostFooter>
               <IconWrapper>
                 <HeartIcon height={25} width={25} />
-                <LikeCount>{meme.ups}</LikeCount>
+                <LikeCount>{meme.likedBy.length}</LikeCount>
               </IconWrapper>
               <IconWrapper>
                 <CommentIcon

@@ -33,6 +33,7 @@ const Create = () => {
         caption: fData.newPostForm.caption || "",
         img: imageUrl,
         userId: currentUser._id,
+        author: currentUser.userName,
       })
         .then((res) => console.log(res))
         .catch((err) => console.log("Error occured: ", err.response));

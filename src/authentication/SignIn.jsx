@@ -17,6 +17,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setCurrentUser } from "../redux/slices/currentUser";
+import { useEffect } from "react";
 
 function Copyright(props) {
   return (
@@ -44,6 +45,14 @@ export default function SignIn() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    if (currentUser) {
+      dispatch(setCurrentUser(currentUser));
+      navigate("/Home");
+    }
+  }, []);
+
   /* Sign In Button Handler */
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -59,22 +68,13 @@ export default function SignIn() {
       })
       .then((res) => {
         if (res) {
+          localStorage.setItem("currentUser", JSON.stringify(res.data));
           dispatch(setCurrentUser(res.data));
           navigate("/Home");
         }
       })
       .catch((err) => console.log(err.response.data));
   }
-
-  // useEffect(() => {
-  //   axios
-  //     .post("http://localhost:8080/auth/login/", {
-  //       email: "raunakp@mail.com",
-  //       password: "123456",
-  //     })
-  //     .then((res) => console.log(res))
-  //     .catch((err) => console.log(err));
-  // });
 
   return (
     <ThemeProvider theme={defaultTheme}>
