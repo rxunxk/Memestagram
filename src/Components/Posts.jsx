@@ -68,7 +68,7 @@ const Post = () => {
           <PostContainer key={meme.author + index}>
             <PostHeader>
               <UserIcon
-                isOnline={false}
+                isOnlin0e={false}
                 isStory={false}
                 height={40}
                 width={40}

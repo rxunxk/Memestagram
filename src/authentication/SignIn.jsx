@@ -12,6 +12,12 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Link as RouterLink } from "react-router-dom";
+// import { useEffect } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setCurrentUser } from "../redux/slices/currentUser";
+
 function Copyright(props) {
   return (
     <Typography
@@ -35,15 +41,40 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SignIn() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   /* Sign In Button Handler */
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    login({ email: data.get("email"), password: data.get("password") });
   };
+
+  function login(data) {
+    axios
+      .post("http://localhost:8080/auth/login", {
+        email: data.email,
+        password: data.password,
+      })
+      .then((res) => {
+        if (res) {
+          dispatch(setCurrentUser(res.data));
+          navigate("/Home");
+        }
+      })
+      .catch((err) => console.log(err.response.data));
+  }
+
+  // useEffect(() => {
+  //   axios
+  //     .post("http://localhost:8080/auth/login/", {
+  //       email: "raunakp@mail.com",
+  //       password: "123456",
+  //     })
+  //     .then((res) => console.log(res))
+  //     .catch((err) => console.log(err));
+  // });
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -93,16 +124,14 @@ export default function SignIn() {
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
             />
-            <RouterLink to="/Home">
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-              >
-                Sign In
-              </Button>
-            </RouterLink>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Sign In
+            </Button>
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
