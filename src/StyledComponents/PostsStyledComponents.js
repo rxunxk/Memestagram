@@ -54,7 +54,7 @@ export const PostMenuBtn = styled.div`
   }
 `;
 
-export const PostCaption = styled.div`
+export const PostTitle = styled.div`
   font-size: 1.2rem;
   font-weight: 400;
   margin-top: 1rem;

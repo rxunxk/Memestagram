@@ -46,31 +46,31 @@ const Create = () => {
         <TopNavBar />
         <Sidebar />
         <BottomNavBar />
-        <Card className=" bg-black text-white rounded-md">
+        <Card className="w-[600px] max-w-[80%] bg-black text-white rounded-md border border-[#27272a]">
           <CardHeader>
             <CardTitle>Create New Post</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="w-[600px] max-w-[80%]">
+            <div className="">
               <Label>Title</Label>
               <Input
-                className="text-black w-[100%]"
+                className="text-[#a1a1aa] w-full bg-black border border-[#27272a] mb-2"
                 placeholder="Post Title"
                 type="text"
                 {...register("newPostForm.title", {
                   required: true,
                 })}
               />
-              <Label>Caption</Label>
+              <Label className="mt-2">Caption</Label>
               <Input
-                className="text-black w-max"
+                className="text-[#a1a1aa] w-full bg-black border border-[#27272a] mb-2"
                 placeholder="Post Caption"
                 type="text"
                 {...register("newPostForm.caption")}
               />
-              <Label>Choose Media</Label>
+              <Label className="mt-4">Choose Media</Label>
               <Input
-                className="text-black w-max"
+                className="text-black bg-white w-full"
                 type="file"
                 {...register("newPostForm.media", {
                   required: true,
@@ -80,8 +80,10 @@ const Create = () => {
           </CardContent>
           <CardFooter>
             <Button
-              className="bg-black color-white"
+              className="bg-black color-white border border-[#27272a] hover:bg-[#27272a] hover:text-[#fafafa]"
+              variant="outline"
               onClick={handleSubmit(onSubmit)}
+              disabled=""
             >
               Submit
             </Button>

@@ -60,14 +60,13 @@ const Sidebar = () => {
             </DialogTitle>
             <DialogDescription>
               Logging out will end your current session and you'll be redirected
-              to the login page. If you have any unsaved changes, make sure to
-              save them before logging out. Are you sure you want to proceed?
+              to the login page. Are you sure you want to proceed?
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
             <Button
               type="submit"
-              className="bg-black border-0 text-red-400"
+              className="bg-black border-0 hover:bg-[#27272a] text-red-400"
               onClick={() => {
                 localStorage.removeItem("currentUser");
                 navigate("/");
