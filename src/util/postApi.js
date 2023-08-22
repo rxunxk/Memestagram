@@ -7,3 +7,7 @@ export const createPost = async (data) => {
 export const getPosts = async () => {
   return await axios.get("http://localhost:8080/posts/");
 };
+
+export const likePost = async (postId, data) => {
+  return await axios.patch(`http://localhost:8080/posts/like/${postId}`, data);
+};

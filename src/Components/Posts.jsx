@@ -20,7 +20,8 @@ import {
 } from "../StyledComponents/PostsStyledComponents";
 import CommentDialog from "../dialogs/CommentDialog";
 import Suggestions from "../layout/Suggestions";
-import { getPosts } from "../util/postApi";
+import { getPosts, likePost } from "../util/postApi";
+import { useSelector } from "react-redux";
 
 let postComponent = "";
 
@@ -28,6 +29,7 @@ const Post = () => {
   const [posts, setPosts] = useState([]);
   const [showComments, setShowComments] = useState(false);
   const [currentPost, setCurrentPost] = useState({});
+  const currentUser = useSelector((state) => state.currentUser);
 
   useEffect(() => {
     getPosts().then((res) => {
@@ -36,30 +38,11 @@ const Post = () => {
     });
   }, []);
 
-  // const getRandomDateAndTime = () => {
-  //   let day = Math.floor(Math.random() * (30 - 1 + 1)) + 1;
-  //   let month = Math.floor(Math.random() * (12 - 1 + 1)) + 1;
-  //   let year = Math.floor(Math.random() * (23 - 0 + 1)) + 0;
-  //   if (year < 10) {
-  //     year = `0${year}`;
-  //   }
-
-  //   let date = `${day}/${month}/${year}`;
-
-  //   let hour = Math.floor(Math.random() * (23 - 0 + 1)) + 0;
-  //   if (hour < 10) {
-  //     hour = `0${hour}`;
-  //   }
-  //   let minute = Math.floor(Math.random() * (59 - 0 + 1)) + 0;
-  //   if (minute < 10) {
-  //     minute = `0${minute}`;
-  //   }
-
-  //   let time = `${hour}:${minute}`;
-  //   return `${date} at ${time}`;
-  // };
-
-  const likeHandler = () => {};
+  const likeHandler = (postId) => {
+    likePost(postId, { currentUser: currentUser._id })
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err.response));
+  };
 
   if (posts?.length === 0) {
     postComponent = <h3>No Posts available!</h3>;
@@ -91,7 +74,14 @@ const Post = () => {
           <PostMedia src={`${meme.img}`} className="border border-[#262626]" />
           <PostFooter>
             <IconWrapper>
-              <HeartIcon height={25} width={25} onClick={likeHandler} />
+              <HeartIcon
+                height={25}
+                width={25}
+                onClick={() => likeHandler(meme._id)}
+                className={`${
+                  meme.likedBy.includes(currentUser._id) ? "text-red-500" : ""
+                }`}
+              />
               <LikeCount>{meme.likedBy.length}</LikeCount>
             </IconWrapper>
             <IconWrapper>
@@ -108,10 +98,14 @@ const Post = () => {
             </IconWrapper>
             <SaveIcon />
           </PostFooter>
-          <div>
-            <span className="font-bold">{`${meme.author} `}</span>
-            {meme.caption}
-          </div>
+          {meme.caption ? (
+            <div>
+              <span className="font-bold">{`${meme.author} `}</span>
+              {meme.caption}
+            </div>
+          ) : (
+            ""
+          )}
         </PostContainer>
       );
     });
