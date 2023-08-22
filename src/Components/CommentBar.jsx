@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 // import { CommentBarContainer } from "../StyledComponents/CommentBarStyledComponents";
 import { FlexBox } from "../StyledComponents/GlobalSC";
 import UserIcon from "./UserIcon";
-import { HeartIcon } from "../StyledComponents/PostsStyledComponents";
+import { LikedIcon } from "../StyledComponents/PostsStyledComponents";
 
 const CommentBar = ({ comment }) => {
   return (
@@ -21,7 +21,7 @@ const CommentBar = ({ comment }) => {
         </FlexBox>
       </FlexBox>
       <FlexBox>
-        <HeartIcon style={{ marginTop: "3px", marginRight: "5px" }} />
+        <LikedIcon style={{ marginTop: "3px", marginRight: "5px" }} />
         <p>{comment.likes}</p>
       </FlexBox>
     </FlexBox>

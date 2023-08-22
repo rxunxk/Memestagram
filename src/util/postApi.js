@@ -11,3 +11,10 @@ export const getPosts = async () => {
 export const likePost = async (postId, data) => {
   return await axios.patch(`http://localhost:8080/posts/like/${postId}`, data);
 };
+
+export const dislikePost = async (postId, data) => {
+  return await axios.patch(
+    `http://localhost:8080/posts/dislike/${postId}`,
+    data
+  );
+};

@@ -18,6 +18,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setCurrentUser } from "../redux/slices/currentUser";
 import { useEffect } from "react";
+import { getCurrentUser } from "../util/utilFunctions";
 
 function Copyright(props) {
   return (
@@ -46,7 +47,7 @@ export default function SignIn() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    const currentUser = getCurrentUser();
     if (currentUser) {
       dispatch(setCurrentUser(currentUser));
       navigate("/Home");

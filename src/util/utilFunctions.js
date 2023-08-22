@@ -20,3 +20,6 @@ export const getRandomDateAndTime = () => {
   let time = `${hour}:${minute}`;
   return `${date} at ${time}`;
 };
+
+export const getCurrentUser = () =>
+  JSON.parse(localStorage.getItem("currentUser"));

@@ -1,5 +1,10 @@
 import styled from "styled-components";
-import { FaRegHeart, FaRegComment, FaRegBookmark } from "react-icons/fa";
+import {
+  FaRegHeart,
+  FaRegComment,
+  FaRegBookmark,
+  FaHeart,
+} from "react-icons/fa";
 import { FiSend } from "react-icons/fi";
 
 export const PostContainer = styled.div`
@@ -93,7 +98,7 @@ export const IconWrapper = styled.div`
   align-items: center;
 `;
 
-export const HeartIcon = styled(FaRegHeart)`
+export const DislikedIcon = styled(FaRegHeart)`
   height: ${(props) => props.height}px;
   width: ${(props) => props.width}px;
 
@@ -105,6 +110,20 @@ export const HeartIcon = styled(FaRegHeart)`
     transform: scale(0.9);
   }
 `;
+
+export const LikedIcon = styled(FaHeart)`
+  height: ${(props) => props.height}px;
+  width: ${(props) => props.width}px;
+  color: red;
+
+  &:hover {
+    cursor: pointer;
+  }
+  &:active {
+    transform: scale(0.9);
+  }
+`;
+
 export const CommentIcon = styled(FaRegComment)`
   height: 25px;
   width: 25px;

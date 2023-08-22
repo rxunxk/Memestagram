@@ -1,5 +1,5 @@
 import { BNContainer } from "../StyledComponents/BottomNavBarSC";
-import { HeartIcon } from "../StyledComponents/PostsStyledComponents";
+import { LikedIcon } from "../StyledComponents/PostsStyledComponents";
 import {
   ChatIcon,
   SettingsIcon,
@@ -28,9 +28,10 @@ const BottomNavBar = () => {
           navigate("/Chat");
         }}
       />
-      <HeartIcon
+      <LikedIcon
         height={25}
         width={25}
+        style={{ color: "white" }}
         onClick={() => {
           navigate("/Home");
         }}

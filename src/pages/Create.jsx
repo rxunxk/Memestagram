@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { storage } from "../util/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { createPost } from "../util/postApi";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import {
   Card,
   CardContent,
@@ -16,12 +16,18 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { getCurrentUser } from "../util/utilFunctions";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Create = () => {
   const { register, handleSubmit } = useForm();
-  const currentUser = useSelector((state) => state.currentUser);
+  const currentUser = getCurrentUser();
+  const [submitDisable, setSubmitDisable] = useState(false);
+  const navigate = useNavigate();
 
   const onSubmit = async (fData) => {
+    setSubmitDisable(true);
     const imageRef = ref(storage, `posts/${fData.newPostForm.media[0].name}`);
     const uploadedImage = await uploadBytes(
       imageRef,
@@ -35,7 +41,10 @@ const Create = () => {
         userId: currentUser._id,
         author: currentUser.userName,
       })
-        .then((res) => console.log(res))
+        .then((res) => {
+          navigate("/Home");
+          console.log(res);
+        })
         .catch((err) => console.log("Error occured: ", err.response));
     });
   };
@@ -83,7 +92,7 @@ const Create = () => {
               className="bg-black color-white border border-[#27272a] hover:bg-[#27272a] hover:text-[#fafafa]"
               variant="outline"
               onClick={handleSubmit(onSubmit)}
-              disabled=""
+              disabled={submitDisable}
             >
               Submit
             </Button>

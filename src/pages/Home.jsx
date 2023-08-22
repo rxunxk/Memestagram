@@ -1,6 +1,6 @@
 import Sidebar from "../layout/Sidebar";
 import Stories from "../Components/Stories";
-import Posts from "../Components/Posts";
+import PostsList from "../Components/PostsList";
 import BottomNavBar from "../layout/BottomNavBar";
 import { PageContainer } from "../StyledComponents/GlobalSC";
 import TopNavBar from "../layout/TopNavBar";
@@ -15,7 +15,7 @@ const Home = () => {
         <TopNavBar />
         <Sidebar />
         <Stories />
-        <Posts />
+        <PostsList />
         <BottomNavBar />
       </PageContainer>
     </>
