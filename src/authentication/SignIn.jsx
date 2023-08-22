@@ -63,7 +63,7 @@ export default function SignIn() {
 
   function login(data) {
     axios
-      .post("http://localhost:8080/auth/login", {
+      .post("https://memestagram-io-server.vercel.app/auth/login", {
         email: data.email,
         password: data.password,
       })

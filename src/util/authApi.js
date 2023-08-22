@@ -1,5 +1,8 @@
 import axios from "axios";
 
 export const registerUser = (data) => {
-  return axios.post("http://localhost:8080/auth/register", data);
+  return axios.post(
+    "https://memestagram-io-server.vercel.app/auth/register",
+    data
+  );
 };
