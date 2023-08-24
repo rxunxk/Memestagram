@@ -8,13 +8,18 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import PropTypes from "prop-types";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getCommentsForThisPost } from "../util/commentApi";
+import CommentBar from "../Components/CommentBar";
 
 const CommentsDialog = ({ open, onOpenChange, postId }) => {
+  const [commentList, setCommentList] = useState([]);
+
   useEffect(() => {
     getCommentsForThisPost(postId)
-      .then((res) => console.log(res))
+      .then((res) => {
+        setCommentList(res.data);
+      })
       .catch((err) => console.log(err.data));
   }, [postId]);
 
@@ -24,7 +29,11 @@ const CommentsDialog = ({ open, onOpenChange, postId }) => {
         <DialogContent className="bg-black text-white border-[#27272a]">
           <DialogHeader>
             <DialogTitle className="text-base">Comments</DialogTitle>
-            <DialogDescription></DialogDescription>
+            <DialogDescription>
+              {commentList.map((comment, i) => {
+                return <CommentBar key={i} comment={comment} />;
+              })}
+            </DialogDescription>
           </DialogHeader>
           <DialogFooter>
             <Button
