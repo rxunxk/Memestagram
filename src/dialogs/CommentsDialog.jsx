@@ -26,7 +26,7 @@ const CommentsDialog = ({ open, onOpenChange, postId }) => {
   return (
     <div>
       <Dialog open={open} onOpenChange={onOpenChange}>
-        <DialogContent className="bg-black text-white border-[#27272a]">
+        <DialogContent className="bg-black text-white border-[#27272a] ">
           <DialogHeader>
             <DialogTitle className="text-base">Comments</DialogTitle>
             <DialogDescription>

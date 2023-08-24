@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import PropTypes from "prop-types";
 
 const UserIconContainer = styled.div`
   position: relative;
@@ -28,7 +29,7 @@ const StatusDot = styled.span`
 `;
 
 /* eslint-disable react/prop-types */
-const UserIcon = ({ isOnline, height, width, mr, isStory }) => {
+const UserIcon = ({ isOnline, height, width, mr, isStory, src }) => {
   let status;
   if (isOnline) {
     status = <StatusDot mr={mr} />;
@@ -43,13 +44,27 @@ const UserIcon = ({ isOnline, height, width, mr, isStory }) => {
           height={height}
           width={width}
           mr={mr}
-          src="https://picsum.photos/100/100"
+          src="https://random.imagecdn.app/100/100"
           isStory={isStory}
+          className="self-center"
         />
         {status}
       </UserIconContainer>
+      {/* <UserImage
+        height={height}
+        width={width}
+        mr={mr}
+        src={src}
+        isStory={isStory}
+        className="mt-[5px]"
+      />
+      {status} */}
     </>
   );
+};
+
+UserIcon.propTypes = {
+  src: PropTypes.any,
 };
 
 export default UserIcon;
