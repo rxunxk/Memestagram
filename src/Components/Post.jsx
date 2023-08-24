@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import UserIcon from "./UserIcon";
 import { FaEllipsisH } from "react-icons/fa";
 import {
@@ -19,24 +19,22 @@ import {
   SaveIcon,
   LikeCount,
 } from "../StyledComponents/PostsStyledComponents";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
 import PropTypes from "prop-types";
 import { likePost, dislikePost } from "../util/postApi";
+import { getTotalCommentsForPost } from "../util/commentApi";
 
-const Post = ({ post, currentUser }) => {
-  const [commentsDialog, setCommentsDialog] = useState(false);
+const Post = ({ post, currentUser, setPostId, setShowComments }) => {
   const [currPost, setCurrPost] = useState(post);
   const [liked, setLiked] = useState(
     currPost?.likedBy?.includes(currentUser?._id)
   );
+  const [totalComments, setTotalComments] = useState(0);
+
+  useEffect(() => {
+    getTotalCommentsForPost(currPost._id).then((res) => {
+      setTotalComments(res.data);
+    });
+  }, []);
 
   const dislikeHandler = () => {
     likePost(currPost._id, { currentUser: currentUser._id })
@@ -59,23 +57,6 @@ const Post = ({ post, currentUser }) => {
   };
   return (
     <div>
-      <Dialog open={commentsDialog} onOpenChange={setCommentsDialog}>
-        <DialogContent className="bg-black text-white border-[#27272a]">
-          <DialogHeader>
-            <DialogTitle className="text-base">Comments</DialogTitle>
-            <DialogDescription></DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
-            <Button
-              type="submit"
-              className="bg-black border-0 hover:bg-[#27272a] text-red-400"
-              onClick={() => {}}
-            >
-              Log out
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
       <PostContainer>
         <PostHeader>
           <UserIcon
@@ -116,10 +97,11 @@ const Post = ({ post, currentUser }) => {
           <IconWrapper>
             <CommentIcon
               onClick={() => {
-                setCommentsDialog(true);
+                setPostId(currPost._id);
+                setShowComments(true);
               }}
             />
-            <LikeCount>{}</LikeCount>
+            <LikeCount>{totalComments}</LikeCount>
           </IconWrapper>
           <IconWrapper>
             <ShareIcon height={25} width={25} />
@@ -149,5 +131,7 @@ Post.propTypes = {
   likedBy: PropTypes.any,
   post: PropTypes.any,
   currentUser: PropTypes.any,
+  setPostId: PropTypes.any,
+  setShowComments: PropTypes.any,
 };
 export default Post;
