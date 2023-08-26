@@ -11,9 +11,12 @@ import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { getCommentsForThisPost } from "../util/commentApi";
 import CommentBar from "../Components/CommentBar";
+import { getCurrentUser } from "../util/utilFunctions";
 
 const CommentsDialog = ({ open, onOpenChange, postId }) => {
   const [commentList, setCommentList] = useState([]);
+
+  const currentUser = getCurrentUser();
 
   useEffect(() => {
     getCommentsForThisPost(postId)
@@ -26,12 +29,18 @@ const CommentsDialog = ({ open, onOpenChange, postId }) => {
   return (
     <div>
       <Dialog open={open} onOpenChange={onOpenChange}>
-        <DialogContent className="bg-black text-white border-[#27272a] ">
+        <DialogContent className="sm:w-[100%] max-w-[700px] bg-black text-white border-[#27272a]">
           <DialogHeader>
             <DialogTitle className="text-base">Comments</DialogTitle>
             <DialogDescription>
               {commentList.map((comment, i) => {
-                return <CommentBar key={i} comment={comment} />;
+                return (
+                  <CommentBar
+                    key={i}
+                    comment={comment}
+                    currentUser={currentUser}
+                  />
+                );
               })}
             </DialogDescription>
           </DialogHeader>
