@@ -21,3 +21,11 @@ export const dislikeComment = async (commentId, data) =>
     `https://memestagram-io-server.vercel.app/comments/dislike/${commentId}`,
     data
   );
+
+export const createComment = async (data) =>
+  await axios.post(`https://memestagram-io-server.vercel.app/comments/`, data);
+
+export const deleteComment = async (commentId) =>
+  await axios.delete(
+    `https://memestagram-io-server.vercel.app/comments/${commentId}`
+  );
