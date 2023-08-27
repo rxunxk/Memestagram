@@ -5,7 +5,7 @@ import { getPosts } from "../util/postApi";
 import Post from "./Post";
 import { getCurrentUser } from "../util/utilFunctions";
 import CommentsDialog from "../dialogs/CommentsDialog";
-
+import { PostLoader } from "../loaders/PostLoader";
 let postComponent = "";
 
 const PostsList = () => {
@@ -24,7 +24,7 @@ const PostsList = () => {
   }, []);
 
   if (posts?.length === 0) {
-    postComponent = <h3>No Posts available!</h3>;
+    postComponent = <PostLoader />;
   } else {
     postComponent = posts?.map((meme, index) => {
       return (

@@ -44,15 +44,15 @@ const CommentBar = ({ comment, currentUser }) => {
   }, []);
 
   return (
-    <div className="flex flex-row content-between items-center my-2 min-w-full">
+    <div className="flex flex-row justify-between items-center my-2 min-w-full">
       <div className="flex gap-[10px]">
         <img
           src={user?.profilePicture}
           className="h-[35px] w-[35px] rounded-[50%] mt-[5px]"
         />
-        <div className="flex flex-col content-start">
+        <div className="flex flex-col items-start">
           <div className="font-bold">{user?.userName}</div>
-          <div className="">{currComment?.comment}</div>
+          <div className="flex justify-start">{currComment?.comment}</div>
         </div>
       </div>
       <div className="flex flex-col items-center">

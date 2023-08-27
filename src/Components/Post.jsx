@@ -28,7 +28,7 @@ const Post = ({ post, currentUser, setPostId, setShowComments }) => {
   const [liked, setLiked] = useState(
     currPost?.likedBy?.includes(currentUser?._id)
   );
-  const [totalComments, setTotalComments] = useState(0);
+  const [totalComments, setTotalComments] = useState(post?.comments?.length);
 
   useEffect(() => {
     getTotalCommentsForPost(currPost._id).then((res) => {

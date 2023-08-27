@@ -45,7 +45,7 @@ const CommentsDialog = ({ open, onOpenChange, postId }) => {
   return (
     <div>
       <Dialog open={open} onOpenChange={onOpenChange}>
-        <DialogContent className="sm:w-[100%] max-w-[700px] bg-black text-white border-[#27272a]">
+        <DialogContent className="flex flex-col sm:w-[100%] max-w-[700px] max-h-[80%] overflow-y-scroll bg-black text-white border-[#27272a]">
           <DialogHeader>
             <DialogTitle className="text-base">Comments</DialogTitle>
             <DialogDescription>
@@ -63,6 +63,7 @@ const CommentsDialog = ({ open, onOpenChange, postId }) => {
           <DialogFooter className="flex flex-row items-center gap-4">
             <Input
               type="text"
+              placeholder="comment something..."
               className="text-[#a1a1aa] w-full bg-black border border-[#27272a] mb-2"
               {...register("commentForm.comment", {
                 required: true,
