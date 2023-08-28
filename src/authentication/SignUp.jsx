@@ -1,157 +1,125 @@
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { registerUser } from "../util/authApi";
 import { useNavigate } from "react-router-dom";
-
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
-// TODO remove, this demo shouldn't need to reset the theme.
-
-const defaultTheme = createTheme();
+import { storage } from "../util/firebase";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 export default function SignUp() {
   const navigate = useNavigate();
+  const [signUpDisable, setSignUpDisable] = useState(false);
+  const { register, handleSubmit } = useForm();
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-
-    registerUser({
-      fName: data.get("firstName"),
-      lName: data.get("lastName"),
-      userName: data.get("firstName") + data.get("lastName"),
-      email: data.get("email"),
-      password: data.get("password"),
-    })
-      .then((res) => {
-        console.log(res);
-        navigate("/");
+  const onSubmit = async (fData) => {
+    setSignUpDisable(true);
+    const imageRef = ref(
+      storage,
+      `profilePics/${fData.signUpForm.profilePicture[0].name}`
+    );
+    const uploadedImage = await uploadBytes(
+      imageRef,
+      fData.signUpForm.profilePicture[0]
+    );
+    getDownloadURL(uploadedImage.ref).then((imageUrl) => {
+      console.log(imageUrl);
+      registerUser({
+        fName: fData.signUpForm.fName,
+        lName: fData.signUpForm.lName,
+        email: fData.signUpForm.email,
+        userName: fData.signUpForm.fName + " " + fData.signUpForm.lName,
+        password: fData.signUpForm.password,
+        profilePicture: imageUrl,
       })
-      .catch((err) => console.log(err));
+        .then((res) => {
+          console.log(res);
+          navigate("/");
+        })
+        .catch((err) => console.log(err.response));
+    });
   };
 
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign up
-          </Typography>
-          <Box
-            component="form"
-            noValidate
-            onSubmit={handleSubmit}
-            sx={{ mt: 3 }}
-          >
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="given-name"
-                  name="firstName"
-                  required
-                  fullWidth
-                  id="firstName"
-                  label="First Name"
-                  autoFocus
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Checkbox value="allowExtraEmails" color="primary" />
-                  }
-                  label="I want to receive inspiration, marketing promotions and updates via email."
-                />
-              </Grid>
-            </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Sign Up
-            </Button>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href="#" variant="body2">
-                  Already have an account? Sign in
-                </Link>
-              </Grid>
-            </Grid>
-          </Box>
-        </Box>
-        <Copyright sx={{ mt: 5 }} />
-      </Container>
-    </ThemeProvider>
+    <div className="w-screen h-screen flex justify-center items-center">
+      <Card className="w-[600px] h-[600px] mx-2">
+        <CardHeader className="space-y-1">
+          <CardTitle className="text-2xl">Create an account</CardTitle>
+          <CardDescription>
+            Submit this form below to create your account
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="fName">First Name</Label>
+            <Input
+              id="name"
+              type="text"
+              placeholder="First Name"
+              {...register("signUpForm.fName", {
+                required: true,
+              })}
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="fName">Last Name</Label>
+            <Input
+              id="name"
+              type="text"
+              placeholder="Last Name"
+              {...register("signUpForm.lName", {
+                required: true,
+              })}
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="email">Email</Label>
+            <Input
+              id="email"
+              type="email"
+              placeholder="m@example.com"
+              {...register("signUpForm.email", {
+                required: true,
+              })}
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="password">Password</Label>
+            <Input
+              id="password"
+              type="password"
+              placeholder="password"
+              {...register("signUpForm.password", {
+                required: true,
+              })}
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="password">Profile Picture</Label>
+            <Input
+              id="password"
+              type="file"
+              {...register("signUpForm.profilePicture", {
+                required: true,
+              })}
+            />
+          </div>
+        </CardContent>
+        <CardFooter>
+          <Button onClick={handleSubmit(onSubmit)} disabled={signUpDisable}>
+            Submit
+          </Button>
+        </CardFooter>
+      </Card>
+    </div>
   );
 }

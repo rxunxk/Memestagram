@@ -18,7 +18,6 @@ const PostsList = () => {
 
   useEffect(() => {
     getPosts().then((res) => {
-      console.log(res.data);
       setPosts(res.data);
     });
   }, []);
@@ -26,10 +25,10 @@ const PostsList = () => {
   if (posts?.length === 0) {
     postComponent = <PostLoader />;
   } else {
-    postComponent = posts?.map((meme, index) => {
+    postComponent = posts?.map((post, index) => {
       return (
         <Post
-          post={meme}
+          post={post}
           key={index}
           setPostId={setPostId}
           setShowComments={setShowComments}

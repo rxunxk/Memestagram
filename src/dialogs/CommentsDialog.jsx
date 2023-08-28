@@ -33,6 +33,8 @@ const CommentsDialog = ({ open, onOpenChange, postId }) => {
   const onSend = (fData) => {
     createComment({
       userId: currentUser._id,
+      userName: currentUser.userName,
+      userProfilePic: currentUser.profilePicture,
       postId: postId,
       comment: fData.commentForm.comment,
     })
@@ -73,13 +75,6 @@ const CommentsDialog = ({ open, onOpenChange, postId }) => {
               className=" h-[20px] w-[20px] mb-[10px] hover:cursor-pointer"
               onClick={handleSubmit(onSend)}
             />
-            {/* <Button
-              type="submit"
-              className="bg-black border-0 hover:bg-[#27272a] text-red-400"
-              onClick={() => {}}
-            >
-              Log out
-            </Button> */}
           </DialogFooter>
         </DialogContent>
       </Dialog>

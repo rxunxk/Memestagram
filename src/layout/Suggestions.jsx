@@ -1,5 +1,8 @@
 import styled from "styled-components";
 import UserIcon from "../Components/UserIcon";
+import { useEffect, useState } from "react";
+import { getUser } from "../util/userApi";
+import { getCurrentUser } from "../util/utilFunctions";
 
 const SuggestedProfileNames = [
   "Nelle Leonard",
@@ -64,21 +67,37 @@ const SuggestedProfiles = styled.div`
 `;
 
 const Suggestions = () => {
+  const [user, setUser] = useState();
+  const currentUser = getCurrentUser();
+
+  useEffect(() => {
+    getUser(currentUser._id).then((res) => {
+      console.log(res.data.profilePicture);
+      setUser(res.data);
+    });
+  }, []);
+
   return (
     <>
       <SuggestionsContainer>
         <ProfilePicName>
-          <UserIcon isOnline={false} height={60} width={60} mr={1} />
-          <ProfileName>Raunak Pandey</ProfileName>
+          <UserIcon
+            isOnline={false}
+            height={60}
+            width={60}
+            mr={1}
+            src={user?.profilePicture}
+          />
+          <ProfileName>{`${user?.fName} ${user?.lName}`}</ProfileName>
         </ProfilePicName>
         <SuggestedForYou>
           <p>Suggested For You</p>
           <SeeAllBtn>See All</SeeAllBtn>
         </SuggestedForYou>
         <SuggestedProfiles>
-          {SuggestedProfileNames.map((name) => {
+          {SuggestedProfileNames.map((name, i) => {
             return (
-              <ProfilePicName key={name} mb={1}>
+              <ProfilePicName key={i} mb={1}>
                 <UserIcon isOnline={true} height={40} width={40} mr={1} />
                 <ProfileName>{name}</ProfileName>
               </ProfilePicName>

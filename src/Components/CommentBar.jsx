@@ -3,12 +3,12 @@ import {
   LikedIcon,
   DislikedIcon,
 } from "../StyledComponents/PostsStyledComponents";
-import { useEffect, useState } from "react";
-import { getUser } from "../util/userApi";
+import { useState } from "react";
+// import { getUser } from "../util/userApi";
 import { likeComment, dislikeComment } from "../util/commentApi";
 
 const CommentBar = ({ comment, currentUser }) => {
-  const [user, setUser] = useState();
+  // const [user, setUser] = useState();
   const [currComment, setCurrComment] = useState(comment);
   const [liked, setLiked] = useState(
     currComment?.likedBy?.includes(currentUser?._id)
@@ -34,24 +34,24 @@ const CommentBar = ({ comment, currentUser }) => {
       .catch((err) => console.log(err.response));
   };
 
-  useEffect(() => {
-    getUser(currComment?.userId)
-      .then((res) => {
-        setUser(res.data);
-        console.log(res);
-      })
-      .catch((err) => console.log(err.data));
-  }, []);
+  // useEffect(() => {
+  //   getUser(currComment?.userId)
+  //     .then((res) => {
+  //       setUser(res.data);
+  //       console.log(res);
+  //     })
+  //     .catch((err) => console.log(err.data));
+  // }, []);
 
   return (
     <div className="flex flex-row justify-between items-center my-2 min-w-full">
       <div className="flex gap-[10px]">
         <img
-          src={user?.profilePicture}
+          src={comment?.userProfilePic}
           className="h-[35px] w-[35px] rounded-[50%] mt-[5px]"
         />
         <div className="flex flex-col items-start">
-          <div className="font-bold">{user?.userName}</div>
+          <div className="font-bold">{comment?.userName}</div>
           <div className="flex justify-start">{currComment?.comment}</div>
         </div>
       </div>

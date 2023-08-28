@@ -44,7 +44,7 @@ const UserIcon = ({ isOnline, height, width, mr, isStory, src }) => {
           height={height}
           width={width}
           mr={mr}
-          src="https://random.imagecdn.app/100/100"
+          src={`${src?.length ? src : "https://random.imagecdn.app/100/100"}`}
           isStory={isStory}
           className="self-center"
         />
