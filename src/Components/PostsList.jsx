@@ -40,12 +40,6 @@ const PostsList = () => {
 
   return (
     <>
-      {/* <CommentDialog
-        open={showComments}
-        setOpen={setShowComments}
-        post={currentPost}
-        key={Math.random()}
-      /> */}
       <CommentsDialog
         open={showComments}
         onOpenChange={setShowComments}

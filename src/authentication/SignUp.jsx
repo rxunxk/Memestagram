@@ -23,30 +23,47 @@ export default function SignUp() {
 
   const onSubmit = async (fData) => {
     setSignUpDisable(true);
-    const imageRef = ref(
-      storage,
-      `profilePics/${fData.signUpForm.profilePicture[0].name}`
-    );
-    const uploadedImage = await uploadBytes(
-      imageRef,
-      fData.signUpForm.profilePicture[0]
-    );
-    getDownloadURL(uploadedImage.ref).then((imageUrl) => {
-      console.log(imageUrl);
+    if (fData.signUpForm.profilePicture.length) {
+      const imageRef = ref(
+        storage,
+        `profilePics/${fData.signUpForm.profilePicture[0].name}`
+      );
+      const uploadedImage = await uploadBytes(
+        imageRef,
+        fData.signUpForm.profilePicture[0]
+      );
+      getDownloadURL(uploadedImage.ref).then((imageUrl) => {
+        console.log(imageUrl);
+        registerUser({
+          fName: fData.signUpForm.fName,
+          lName: fData.signUpForm.lName,
+          email: fData.signUpForm.email,
+          userName: fData.signUpForm.fName + " " + fData.signUpForm.lName,
+          password: fData.signUpForm.password,
+          profilePicture: imageUrl,
+        })
+          .then((res) => {
+            console.log(res);
+            navigate("/");
+          })
+          .catch((err) => console.log(err.response));
+      });
+    } else {
       registerUser({
         fName: fData.signUpForm.fName,
         lName: fData.signUpForm.lName,
         email: fData.signUpForm.email,
         userName: fData.signUpForm.fName + " " + fData.signUpForm.lName,
         password: fData.signUpForm.password,
-        profilePicture: imageUrl,
+        profilePicture:
+          "https://firebasestorage.googleapis.com/v0/b/memestagram-io.appspot.com/o/profilePics%2Fdefault%20pic.jpg?alt=media&token=b8d6a952-8323-4f41-8726-a046ef389976",
       })
         .then((res) => {
           console.log(res);
           navigate("/");
         })
         .catch((err) => console.log(err.response));
-    });
+    }
   };
 
   return (
@@ -108,9 +125,7 @@ export default function SignUp() {
             <Input
               id="password"
               type="file"
-              {...register("signUpForm.profilePicture", {
-                required: true,
-              })}
+              {...register("signUpForm.profilePicture", {})}
             />
           </div>
         </CardContent>

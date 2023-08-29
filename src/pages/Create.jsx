@@ -28,6 +28,7 @@ const Create = () => {
 
   const onSubmit = async (fData) => {
     setSubmitDisable(true);
+
     const imageRef = ref(storage, `posts/${fData.newPostForm.media[0].name}`);
     const uploadedImage = await uploadBytes(
       imageRef,
@@ -40,12 +41,13 @@ const Create = () => {
         img: imageUrl,
         userId: currentUser._id,
         author: currentUser.userName,
+        authorProfilePic: currentUser.profilePicture,
       })
         .then((res) => {
           navigate("/Home");
           console.log(res);
         })
-        .catch((err) => console.log("Error occured: ", err.response));
+        .catch((err) => console.log("Error occured: ", err));
     });
   };
 

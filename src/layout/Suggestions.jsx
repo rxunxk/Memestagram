@@ -72,7 +72,6 @@ const Suggestions = () => {
 
   useEffect(() => {
     getUser(currentUser._id).then((res) => {
-      console.log(res.data.profilePicture);
       setUser(res.data);
     });
   }, []);

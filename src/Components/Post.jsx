@@ -65,6 +65,7 @@ const Post = ({ post, currentUser, setPostId, setShowComments }) => {
             height={40}
             width={40}
             mr={1}
+            src={currPost.authorProfilePic}
           />
           <PostAuthorNTime>
             <PostAuthor>{currPost.author}</PostAuthor>
