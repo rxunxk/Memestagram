@@ -33,6 +33,9 @@ const StoriesContainer = styled.div`
     width: 100%;
     margin-top: 0.2rem;
   }
+  @media (max-width: 786px) {
+    margin-top: 75px;
+  }
 `;
 
 const Story = styled.div`

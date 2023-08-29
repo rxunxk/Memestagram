@@ -2,6 +2,7 @@ import {
   TNavContainer,
   SearchInput,
   TNBLogo,
+  TNBLogoShort,
 } from "../StyledComponents/TopNavBarSC";
 
 const TopNavBar = () => {
@@ -9,6 +10,7 @@ const TopNavBar = () => {
     <>
       <TNavContainer>
         <TNBLogo>Memestagram</TNBLogo>
+        <TNBLogoShort>M</TNBLogoShort>
         <form
           onSubmit={(e) => {
             e.preventDefault();

@@ -4,7 +4,7 @@ export const TNavContainer = styled.div`
   display: none;
 
   @media (max-width: 786px) {
-    position: sticky;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100vw;
@@ -35,6 +35,17 @@ export const TNBLogo = styled.div`
   font-size: 1.65rem;
 
   @media (max-width: 450px) {
-    font-size: 1.25rem;
+    display: none;
+  }
+`;
+
+export const TNBLogoShort = styled.div`
+  display: none;
+
+  @media (max-width: 450px) {
+    display: block;
+    font-family: "logo-font";
+    transition: 0.3s;
+    font-size: 1.65rem;
   }
 `;
