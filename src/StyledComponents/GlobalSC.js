@@ -73,6 +73,7 @@ export const PageContainer = styled.div`
   height: 100svh;
   width: 100dvw;
   display: flex;
+  flex-grow: 1;
   flex-direction: column;
   align-items: center;
   background-color: black;
