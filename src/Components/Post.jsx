@@ -37,23 +37,29 @@ const Post = ({ post, currentUser, setPostId, setShowComments }) => {
   }, []);
 
   const dislikeHandler = () => {
+    setLiked(true);
     likePost(currPost._id, { currentUser: currentUser._id })
       .then((res) => {
-        setLiked(true);
         setCurrPost(res.data);
         console.log(res);
       })
-      .catch((err) => console.log(err.response));
+      .catch((err) => {
+        setLiked(false);
+        console.log(err.response);
+      });
   };
 
   const likeHandler = () => {
+    setLiked(false);
     dislikePost(currPost._id, { currentUser: currentUser._id })
       .then((res) => {
-        setLiked(false);
         setCurrPost(res.data);
         console.log(res);
       })
-      .catch((err) => console.log(err.response));
+      .catch((err) => {
+        setLiked(true);
+        console.log(err.response);
+      });
   };
   return (
     <div>
