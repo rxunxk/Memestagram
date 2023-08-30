@@ -1,7 +1,5 @@
 import styled from "styled-components";
 import UserIcon from "../Components/UserIcon";
-import { useEffect, useState } from "react";
-import { getUser } from "../util/userApi";
 import { getCurrentUser } from "../util/utilFunctions";
 
 const SuggestedProfileNames = [
@@ -67,14 +65,7 @@ const SuggestedProfiles = styled.div`
 `;
 
 const Suggestions = () => {
-  const [user, setUser] = useState();
-  const currentUser = getCurrentUser();
-
-  useEffect(() => {
-    getUser(currentUser._id).then((res) => {
-      setUser(res.data);
-    });
-  }, []);
+  const user = getCurrentUser();
 
   return (
     <>
