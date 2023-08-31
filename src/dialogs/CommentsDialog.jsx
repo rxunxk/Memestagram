@@ -60,7 +60,6 @@ const CommentsDialog = ({ open, onOpenChange, postId }) => {
   };
 
   const delComment = () => {
-    console.log(currCommentId);
     const updatedArray = commentList.filter((c) => c._id !== currCommentId);
     setCommentList(updatedArray);
     deleteComment(currCommentId)

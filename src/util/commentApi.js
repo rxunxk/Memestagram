@@ -29,3 +29,9 @@ export const deleteComment = async (commentId) =>
   await axios.delete(
     `https://memestagram-io-server.vercel.app/comments/${commentId}`
   );
+
+export const updateComment = async (commentId, updatedComment) =>
+  await axios.patch(
+    `https://memestagram-io-server.vercel.app/comments/update/${commentId}`,
+    updatedComment
+  );
