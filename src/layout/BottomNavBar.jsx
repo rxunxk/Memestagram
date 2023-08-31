@@ -8,9 +8,11 @@ import {
 } from "../StyledComponents/GlobalSC";
 import UserIcon from "../Components/UserIcon";
 import { useNavigate } from "react-router-dom";
+import { getCurrentUser } from "../util/utilFunctions";
 
 const BottomNavBar = () => {
   const navigate = useNavigate();
+  const currentUser = getCurrentUser();
 
   return (
     <BNContainer>
@@ -56,6 +58,7 @@ const BottomNavBar = () => {
         onClick={() => {
           navigate("/Profile");
         }}
+        src={currentUser.profilePicture}
       />
     </BNContainer>
   );
