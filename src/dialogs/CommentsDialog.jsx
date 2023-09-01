@@ -43,6 +43,11 @@ const CommentsDialog = ({ open, onOpenChange, postId }) => {
         setCommentList(res.data);
       })
       .catch((err) => console.log(err.data));
+
+    //flushing state
+    return () => {
+      setCommentList([]);
+    };
   }, [postId]);
 
   const onSend = (fData) => {

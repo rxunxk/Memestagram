@@ -69,7 +69,6 @@ const Post = ({ post, currentUser, setPostId, setShowComments, popPost }) => {
   };
 
   const deletePostHandler = () => {
-    console.log(currPost._id);
     popPost(currPost._id);
     deletePost(currPost._id)
       .then((res) => {
@@ -99,13 +98,13 @@ const Post = ({ post, currentUser, setPostId, setShowComments, popPost }) => {
               ).toLocaleTimeString()}`}
             </PostTime>
           </PostAuthorNTime>
-          <DropdownMenu>
+          <DropdownMenu className="border">
             <DropdownMenuTrigger className="ml-auto">
               <PostMenuBtn>
                 <FaEllipsisH />
               </PostMenuBtn>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="border bg-black text-white">
+            <DropdownMenuContent className="border border-[#27272a] bg-black text-white">
               <DropdownMenuItem className="hover:bg-[#27272a]">
                 Edit
               </DropdownMenuItem>
@@ -116,7 +115,7 @@ const Post = ({ post, currentUser, setPostId, setShowComments, popPost }) => {
                 Delete
               </DropdownMenuItem>
               <DropdownMenuItem className="hover:bg-[#27272a]">
-                menu item 3
+                Save Post
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

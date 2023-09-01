@@ -58,6 +58,7 @@ const PostsList = () => {
           style={{
             display: "flex",
             flexDirection: "column",
+            marginBottom: "60px",
           }}
         >
           {postComponent}
