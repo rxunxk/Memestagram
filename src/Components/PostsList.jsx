@@ -4,7 +4,7 @@ import { getPosts } from "../util/postApi";
 import Post from "./Post";
 import { getCurrentUser } from "../util/utilFunctions";
 import CommentsDialog from "../dialogs/CommentsDialog";
-import { PostLoader } from "../loaders/PostLoader";
+import { PostSkeleton } from "../skeleton/PostSkeleton";
 let postComponent = "";
 
 const PostsList = () => {
@@ -30,7 +30,7 @@ const PostsList = () => {
   }, []);
 
   if (posts?.length === 0) {
-    postComponent = <PostLoader />;
+    postComponent = <PostSkeleton />;
   } else {
     postComponent = posts?.map((post, index) => {
       return (
