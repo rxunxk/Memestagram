@@ -29,6 +29,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { CommentSkeleton } from "../skeleton/CommentSkeleton";
 
 const CommentsDialog = ({ open, onOpenChange, postId }) => {
   const [commentList, setCommentList] = useState([]);
@@ -105,19 +106,23 @@ const CommentsDialog = ({ open, onOpenChange, postId }) => {
           <DialogHeader>
             <DialogTitle className="text-base">Comments</DialogTitle>
             <DialogDescription>
-              {commentList?.map((comment, i) => {
-                return (
-                  <CommentBar
-                    key={i}
-                    comment={comment}
-                    currentUser={currentUser}
-                    setDeleteAlert={setDeleteAlert}
-                    deleteAlert={deleteAlert}
-                    delComment={delComment}
-                    setCurrCommentId={setCurrCommentId}
-                  />
-                );
-              })}
+              {commentList.length ? (
+                commentList?.map((comment, i) => {
+                  return (
+                    <CommentBar
+                      key={i}
+                      comment={comment}
+                      currentUser={currentUser}
+                      setDeleteAlert={setDeleteAlert}
+                      deleteAlert={deleteAlert}
+                      delComment={delComment}
+                      setCurrCommentId={setCurrCommentId}
+                    />
+                  );
+                })
+              ) : (
+                <CommentSkeleton />
+              )}
             </DialogDescription>
           </DialogHeader>
           <DialogFooter className="flex flex-row items-center gap-4">
