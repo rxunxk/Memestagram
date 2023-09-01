@@ -19,11 +19,17 @@ import {
   SaveIcon,
   LikeCount,
 } from "../StyledComponents/PostsStyledComponents";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import PropTypes from "prop-types";
-import { likePost, dislikePost } from "../util/postApi";
+import { likePost, dislikePost, deletePost } from "../util/postApi";
 import { getTotalCommentsForPost } from "../util/commentApi";
 
-const Post = ({ post, currentUser, setPostId, setShowComments }) => {
+const Post = ({ post, currentUser, setPostId, setShowComments, popPost }) => {
   const [currPost, setCurrPost] = useState(post);
   const [liked, setLiked] = useState(
     currPost?.likedBy?.includes(currentUser?._id)
@@ -61,6 +67,16 @@ const Post = ({ post, currentUser, setPostId, setShowComments }) => {
         console.log(err.response);
       });
   };
+
+  const deletePostHandler = () => {
+    console.log(currPost._id);
+    popPost(currPost._id);
+    deletePost(currPost._id)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+  };
   return (
     <div>
       <PostContainer>
@@ -83,9 +99,27 @@ const Post = ({ post, currentUser, setPostId, setShowComments }) => {
               ).toLocaleTimeString()}`}
             </PostTime>
           </PostAuthorNTime>
-          <PostMenuBtn>
-            <FaEllipsisH />
-          </PostMenuBtn>
+          <DropdownMenu>
+            <DropdownMenuTrigger className="ml-auto">
+              <PostMenuBtn>
+                <FaEllipsisH />
+              </PostMenuBtn>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="border bg-black text-white">
+              <DropdownMenuItem className="hover:bg-[#27272a]">
+                Edit
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                className="hover:bg-[#27272a] text-red-600"
+                onClick={deletePostHandler}
+              >
+                Delete
+              </DropdownMenuItem>
+              <DropdownMenuItem className="hover:bg-[#27272a]">
+                menu item 3
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </PostHeader>
         <PostTitle>{currPost.title}</PostTitle>
         <PostMedia
@@ -140,5 +174,6 @@ Post.propTypes = {
   currentUser: PropTypes.any,
   setPostId: PropTypes.any,
   setShowComments: PropTypes.any,
+  popPost: PropTypes.any,
 };
 export default Post;

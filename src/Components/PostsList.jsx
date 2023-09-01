@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-// import CommentDialog from "../dialogs/CommentDialog";
 import Suggestions from "../layout/Suggestions";
 import { getPosts } from "../util/postApi";
 import Post from "./Post";
@@ -12,14 +11,22 @@ const PostsList = () => {
   const [posts, setPosts] = useState([]);
   const [showComments, setShowComments] = useState(false);
   const [postId, setPostId] = useState();
-  // const [commentLikes, setCommentLikes] = useState();
 
   const currentUser = getCurrentUser();
 
-  useEffect(() => {
+  const callGetPostsApi = () => {
     getPosts().then((res) => {
       setPosts(res.data);
     });
+  };
+
+  const popPost = (postId) => {
+    const updatedArray = posts.filter((p) => p._id !== postId);
+    setPosts(updatedArray);
+  };
+
+  useEffect(() => {
+    callGetPostsApi();
   }, []);
 
   if (posts?.length === 0) {
@@ -33,6 +40,7 @@ const PostsList = () => {
           setPostId={setPostId}
           setShowComments={setShowComments}
           currentUser={currentUser}
+          popPost={popPost}
         />
       );
     });
