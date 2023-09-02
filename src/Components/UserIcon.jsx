@@ -12,7 +12,7 @@ const UserImage = styled.img`
   background-size: cover;
   border-radius: 50%;
   border: ${(props) => (props.isStory ? "2px solid red" : "none")};
-  cursor: ${(props) => (props.isStory ? "pointer" : "auto")};
+  cursor: ${(props) => props.cursor};
   margin-right: ${(props) => props.mr}rem;
 `;
 
@@ -28,8 +28,16 @@ const StatusDot = styled.span`
   margin-right: ${(props) => props.mr / 2}rem;
 `;
 
-/* eslint-disable react/prop-types */
-const UserIcon = ({ isOnline, height, width, mr, isStory, src }) => {
+const UserIcon = ({
+  isOnline,
+  height,
+  width,
+  mr,
+  isStory,
+  src,
+  cursor,
+  onClick,
+}) => {
   let status;
   if (isOnline) {
     status = <StatusDot mr={mr} />;
@@ -46,25 +54,24 @@ const UserIcon = ({ isOnline, height, width, mr, isStory, src }) => {
           mr={mr}
           src={`${src?.length ? src : "https://random.imagecdn.app/100/100"}`}
           isStory={isStory}
-          className="self-center"
+          cursor={cursor}
+          onClick={onClick}
         />
         {status}
       </UserIconContainer>
-      {/* <UserImage
-        height={height}
-        width={width}
-        mr={mr}
-        src={src}
-        isStory={isStory}
-        className="mt-[5px]"
-      />
-      {status} */}
     </>
   );
 };
 
 UserIcon.propTypes = {
+  isOnline: PropTypes.any,
   src: PropTypes.any,
+  height: PropTypes.any,
+  width: PropTypes.any,
+  mr: PropTypes.any,
+  isStory: PropTypes.any,
+  cursor: PropTypes.any,
+  onClick: PropTypes.any,
 };
 
 export default UserIcon;

@@ -56,9 +56,10 @@ const BottomNavBar = () => {
         height={25}
         width={25}
         onClick={() => {
-          navigate("/Profile");
+          navigate("/Profile", { state: { userId: currentUser._id } });
         }}
         src={currentUser.profilePicture}
+        cursor={"pointer"}
       />
     </BNContainer>
   );

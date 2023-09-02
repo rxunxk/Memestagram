@@ -3,9 +3,9 @@ import SignIn from "../authentication/SignIn";
 import SignUp from "../authentication/SignUp";
 import Home from "../pages/Home";
 import Chat from "../pages/Chat";
-import Profile from "../pages/Profile";
 import Settings from "../pages/Settings";
 import Create from "../pages/Create";
+import Profile from "../pages/profile/Profile";
 
 const Navigation = () => {
   return (

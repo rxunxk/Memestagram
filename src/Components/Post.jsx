@@ -28,6 +28,7 @@ import {
 import PropTypes from "prop-types";
 import { likePost, dislikePost, deletePost } from "../util/postApi";
 import { getTotalCommentsForPost } from "../util/commentApi";
+import { useNavigate } from "react-router-dom";
 
 const Post = ({ post, currentUser, setPostId, setShowComments, popPost }) => {
   const [currPost, setCurrPost] = useState(post);
@@ -35,6 +36,7 @@ const Post = ({ post, currentUser, setPostId, setShowComments, popPost }) => {
     currPost?.likedBy?.includes(currentUser?._id)
   );
   const [totalComments, setTotalComments] = useState(post?.comments?.length);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getTotalCommentsForPost(currPost._id).then((res) => {
@@ -87,6 +89,9 @@ const Post = ({ post, currentUser, setPostId, setShowComments, popPost }) => {
             width={40}
             mr={1}
             src={currPost.authorProfilePic}
+            onClick={() => {
+              navigate("/Profile", { state: { userId: currPost.userId } });
+            }}
           />
           <PostAuthorNTime>
             <PostAuthor>{currPost.author}</PostAuthor>

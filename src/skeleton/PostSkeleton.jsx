@@ -1,8 +1,9 @@
 import { Skeleton } from "@/components/ui/skeleton";
+import { PostContainer } from "../StyledComponents/PostsStyledComponents";
 
 export const PostSkeleton = () => {
   return (
-    <div className="flex flex-col gap-4 w-[600px] max-w-full">
+    <PostContainer className="px-2 gap-4">
       <div className="flex items-center">
         <Skeleton className="h-[40px] w-[40px] bg-[#333] rounded-full mr-4" />
         <div className="flex flex-col gap-2 flex-grow">
@@ -12,6 +13,6 @@ export const PostSkeleton = () => {
       </div>
       <Skeleton className="h-[1.2rem] w-[50%] bg-[#333]" />
       <Skeleton className="h-[400px] w-[100%] bg-[#333]" />
-    </div>
+    </PostContainer>
   );
 };
