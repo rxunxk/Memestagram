@@ -30,6 +30,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { CommentSkeleton } from "../skeleton/CommentSkeleton";
+let comments = "";
 
 const CommentsDialog = ({ open, onOpenChange, postId }) => {
   const [commentList, setCommentList] = useState([]);
@@ -37,10 +38,12 @@ const CommentsDialog = ({ open, onOpenChange, postId }) => {
   const { register, handleSubmit } = useForm();
   const [deleteAlert, setDeleteAlert] = useState(false);
   const [currCommentId, setCurrCommentId] = useState();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     getCommentsForThisPost(postId)
       .then((res) => {
+        setIsLoading(false);
         setCommentList(res.data);
       })
       .catch((err) => console.log(err.data));
@@ -48,6 +51,7 @@ const CommentsDialog = ({ open, onOpenChange, postId }) => {
     //flushing state
     return () => {
       setCommentList([]);
+      setIsLoading(true);
     };
   }, [postId]);
 
@@ -75,6 +79,27 @@ const CommentsDialog = ({ open, onOpenChange, postId }) => {
       .catch((err) => console.log(err));
   };
 
+  if (isLoading) {
+    comments = <CommentSkeleton />;
+  } else {
+    if (commentList.length === 0) {
+      comments = <h1>No Comments posted on this post</h1>;
+    } else {
+      comments = commentList?.map((comment, i) => {
+        return (
+          <CommentBar
+            key={i}
+            comment={comment}
+            currentUser={currentUser}
+            setDeleteAlert={setDeleteAlert}
+            deleteAlert={deleteAlert}
+            delComment={delComment}
+            setCurrCommentId={setCurrCommentId}
+          />
+        );
+      });
+    }
+  }
   return (
     <div>
       <AlertDialog
@@ -105,25 +130,7 @@ const CommentsDialog = ({ open, onOpenChange, postId }) => {
         <DialogContent className="flex flex-col sm:w-[100%] max-w-[700px] max-h-[80%] overflow-y-scroll bg-black text-white border-[#27272a]">
           <DialogHeader>
             <DialogTitle className="text-base">Comments</DialogTitle>
-            <DialogDescription>
-              {commentList.length ? (
-                commentList?.map((comment, i) => {
-                  return (
-                    <CommentBar
-                      key={i}
-                      comment={comment}
-                      currentUser={currentUser}
-                      setDeleteAlert={setDeleteAlert}
-                      deleteAlert={deleteAlert}
-                      delComment={delComment}
-                      setCurrCommentId={setCurrCommentId}
-                    />
-                  );
-                })
-              ) : (
-                <CommentSkeleton />
-              )}
-            </DialogDescription>
+            <DialogDescription>{comments}</DialogDescription>
           </DialogHeader>
           <DialogFooter className="flex flex-row items-center gap-4">
             <Input

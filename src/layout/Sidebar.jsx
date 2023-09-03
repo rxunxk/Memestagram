@@ -120,13 +120,9 @@ const Sidebar = () => {
           <BiImageAdd style={iconstyle} />
           <ListItemText>Create</ListItemText>
         </ListItem>
-        <ListItem
-          onClick={() => {
-            navigate("/Settings");
-          }}
-        >
+        <ListItem>
           <DropdownMenu className="border ">
-            <DropdownMenuTrigger className="flex ">
+            <DropdownMenuTrigger className="flex h-full w-full">
               <AiFillSetting style={iconstyle} />
               <ListItemText>Settings</ListItemText>
             </DropdownMenuTrigger>

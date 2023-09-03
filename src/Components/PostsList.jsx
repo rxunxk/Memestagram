@@ -11,13 +11,17 @@ const PostsList = () => {
   const [posts, setPosts] = useState([]);
   const [showComments, setShowComments] = useState(false);
   const [postId, setPostId] = useState();
+  const [isLoading, setIsLoading] = useState(true);
 
   const currentUser = getCurrentUser();
 
   const callGetPostsApi = () => {
-    getPosts().then((res) => {
-      setPosts(res.data);
-    });
+    getPosts()
+      .then((res) => {
+        setIsLoading(false);
+        setPosts(res.data);
+      })
+      .catch((err) => console.log(err));
   };
 
   const popPost = (postId) => {
@@ -27,23 +31,31 @@ const PostsList = () => {
 
   useEffect(() => {
     callGetPostsApi();
+
+    return () => {
+      setIsLoading(true);
+    };
   }, []);
 
-  if (posts?.length === 0) {
+  if (isLoading) {
     postComponent = <PostSkeleton />;
   } else {
-    postComponent = posts?.map((post, index) => {
-      return (
-        <Post
-          post={post}
-          key={index}
-          setPostId={setPostId}
-          setShowComments={setShowComments}
-          currentUser={currentUser}
-          popPost={popPost}
-        />
-      );
-    });
+    if (posts?.length === 0) {
+      postComponent = <h1>No Posts. Click create post to add a new post</h1>;
+    } else {
+      postComponent = posts?.map((post, index) => {
+        return (
+          <Post
+            post={post}
+            key={index}
+            setPostId={setPostId}
+            setShowComments={setShowComments}
+            currentUser={currentUser}
+            popPost={popPost}
+          />
+        );
+      });
+    }
   }
 
   return (

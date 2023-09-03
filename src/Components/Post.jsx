@@ -92,9 +92,17 @@ const Post = ({ post, currentUser, setPostId, setShowComments, popPost }) => {
             onClick={() => {
               navigate("/Profile", { state: { userId: currPost.userId } });
             }}
+            cursor={"pointer"}
           />
           <PostAuthorNTime>
-            <PostAuthor>{currPost.author}</PostAuthor>
+            <PostAuthor
+              onClick={() => {
+                navigate("/Profile", { state: { userId: currPost.userId } });
+              }}
+              className="cursor-pointer"
+            >
+              {currPost.author}
+            </PostAuthor>
             <PostTime>
               {`${new Date(
                 currPost.createdAt
