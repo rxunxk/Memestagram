@@ -24,6 +24,7 @@ const Create = () => {
   const { register, handleSubmit } = useForm();
   const currentUser = getCurrentUser();
   const [submitDisable, setSubmitDisable] = useState(false);
+  const [preview, setPreview] = useState();
   const navigate = useNavigate();
 
   const onSubmit = async (fData) => {
@@ -53,11 +54,11 @@ const Create = () => {
 
   return (
     <>
-      <div className="h-screen w-screen flex flex-col items-center justify-center bg-black text-white">
+      <div className="h-screen w-screen flex flex-col items-center justify-center bg-black text-white  overflow-auto">
         <TopNavBar />
         <Sidebar />
         <BottomNavBar />
-        <Card className="w-[600px] max-w-[80%] bg-black text-white rounded-md border border-[#27272a]">
+        <Card className="w-[600px] max-w-[80%] bg-black text-white rounded-md border py-2 border-[#27272a]">
           <CardHeader>
             <CardTitle>Create New Post</CardTitle>
           </CardHeader>
@@ -85,8 +86,17 @@ const Create = () => {
                 type="file"
                 {...register("newPostForm.media", {
                   required: true,
+                  onChange: (e) => {
+                    setPreview(URL.createObjectURL(e.target.files[0]));
+                  },
                 })}
               />
+              <div className="flex w-full justify-center bg-black">
+                <img
+                  src={preview}
+                  className="max-h-[510px] bg-black border border-[#333] mt-4 rounded-[10px]"
+                />
+              </div>
             </div>
           </CardContent>
           <CardFooter>
