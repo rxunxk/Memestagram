@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import { AiFillSetting, AiFillHome, AiOutlineHeart } from "react-icons/ai";
+import { AiFillSetting, AiFillHome } from "react-icons/ai";
 import { CgProfile } from "react-icons/cg";
 import { FiLogOut } from "react-icons/fi";
 import { BiImageAdd } from "react-icons/bi";
@@ -21,6 +21,13 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { getCurrentUser } from "../util/utilFunctions";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const iconstyle = {
   height: "24px",
@@ -34,6 +41,7 @@ const Sidebar = () => {
   const [logoutDialog, setLogoutDialog] = useState(false);
 
   const navigate = useNavigate();
+  const currentUser = getCurrentUser();
 
   function updateScreenSize() {
     const isSmall = window.matchMedia("(max-width: 1300px)").matches;
@@ -98,7 +106,7 @@ const Sidebar = () => {
         </ListItem>
         <ListItem
           onClick={() => {
-            navigate("/Profile");
+            navigate("/Profile", { state: { userId: currentUser._id } });
           }}
         >
           <CgProfile style={iconstyle} />
@@ -114,20 +122,27 @@ const Sidebar = () => {
         </ListItem>
         <ListItem
           onClick={() => {
-            navigate("/Notifications");
-          }}
-        >
-          <AiOutlineHeart style={iconstyle} />
-          <ListItemText>Notifications</ListItemText>
-        </ListItem>
-        <ListItem
-          onClick={() => {
             navigate("/Settings");
           }}
         >
-          <AiFillSetting style={iconstyle} />
-          <ListItemText>Settings</ListItemText>
+          <DropdownMenu className="border ">
+            <DropdownMenuTrigger className="flex ">
+              <AiFillSetting style={iconstyle} />
+              <ListItemText>Settings</ListItemText>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="border border-[#27272a] bg-black text-white">
+              <DropdownMenuItem
+                className="hover:bg-[#27272a] text-red-400"
+                onClick={() => {
+                  setLogoutDialog(true);
+                }}
+              >
+                Logout
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </ListItem>
+
         <ListItem
           onClick={() => {
             setLogoutDialog(true);

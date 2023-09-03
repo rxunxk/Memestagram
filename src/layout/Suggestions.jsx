@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import UserIcon from "../Components/UserIcon";
 import { getCurrentUser } from "../util/utilFunctions";
+import { useNavigate } from "react-router-dom";
 
 const SuggestedProfileNames = [
   "Nelle Leonard",
@@ -66,6 +67,7 @@ const SuggestedProfiles = styled.div`
 
 const Suggestions = () => {
   const user = getCurrentUser();
+  const navigate = useNavigate();
 
   return (
     <>
@@ -77,6 +79,10 @@ const Suggestions = () => {
             width={60}
             mr={1}
             src={user?.profilePicture}
+            onClick={() => {
+              navigate("/Profile", { state: { userId: user._id } });
+            }}
+            cursor={"pointer"}
           />
           <ProfileName>{`${user?.fName} ${user?.lName}`}</ProfileName>
         </ProfilePicName>

@@ -88,7 +88,7 @@ const Post = ({ post, currentUser, setPostId, setShowComments, popPost }) => {
             height={40}
             width={40}
             mr={1}
-            src={currPost.authorProfilePic}
+            src={currPost?.authorProfilePic}
             onClick={() => {
               navigate("/Profile", { state: { userId: currPost.userId } });
             }}

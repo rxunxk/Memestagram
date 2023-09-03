@@ -29,3 +29,8 @@ export const deletePost = async (postId) =>
   await axios.delete(
     `https://memestagram-io-server.vercel.app/posts/delete/${postId}`
   );
+
+export const getPostsOfThisUser = async (userId) =>
+  await axios.get(
+    `https://memestagram-io-server.vercel.app/posts/user/${userId}`
+  );
