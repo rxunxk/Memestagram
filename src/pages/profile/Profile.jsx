@@ -13,17 +13,21 @@ import { getCurrentUser, setCurrentUserFromDB } from "@/src/util/utilFunctions";
 import { useDispatch } from "react-redux";
 import { setCurrentUser } from "@/src/redux/slices/currentUser";
 
+let postComponent = "";
+
 const Profile = () => {
   const location = useLocation();
   const [user, setUser] = useState({});
   const [posts, setPosts] = useState([]);
   const currentUser = getCurrentUser();
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(true);
 
   const callGetUser = () => {
     getUser(location.state.userId)
       .then((res) => {
         setUser(res.data);
+        setIsLoading(false);
         callGetPostsOfThisUser(res.data._id);
       })
       .catch((err) => console.log(err));
@@ -53,7 +57,31 @@ const Profile = () => {
 
   useEffect(() => {
     callGetUser();
+
+    return () => {
+      setIsLoading(true);
+    };
   }, []);
+
+  if (isLoading) {
+    postComponent = <PostSkeleton />;
+  } else {
+    if (posts?.length === 0) {
+      postComponent = (
+        <div className="flex w-full">You Have not posted anything.</div>
+      );
+    } else {
+      postComponent = posts.map((post, index) => {
+        return (
+          <img
+            src={post.img}
+            key={index}
+            className="hover:opacity-50 cursor-pointer border border-[#333]"
+          />
+        );
+      });
+    }
+  }
 
   return (
     <div className="h-screen w-screen flex flex-col items-center bg-black text-white">
@@ -130,19 +158,7 @@ const Profile = () => {
         </div>
       </div>
       <div className="grid grid-cols-3 gap-2 w-[600px] max-w-full overflow-auto">
-        {posts?.length ? (
-          posts.map((post, index) => {
-            return (
-              <img
-                src={post.img}
-                key={index}
-                className="hover:opacity-50 cursor-pointer border border-[#333]"
-              />
-            );
-          })
-        ) : (
-          <PostSkeleton />
-        )}
+        {postComponent}
       </div>
       <Sidebar />
       <BottomNavBar />
