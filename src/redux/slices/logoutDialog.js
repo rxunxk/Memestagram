@@ -3,7 +3,7 @@ const logoutDialog = createSlice({
   name: "LogoutDialog",
   initialState: false,
   reducers: {
-    setLogoutDialog: (state) => !state,
+    setLogoutDialog: (state, action) => action.payload,
   },
 });
 

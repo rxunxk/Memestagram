@@ -4,15 +4,21 @@ import UserIcon from "@/src/Components/UserIcon";
 import { Button } from "@/components/ui/button";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getUser } from "@/src/util/userApi";
+import { followThisUser, getUser, unFollowThisUser } from "@/src/util/userApi";
 import TopNavBar from "@/src/layout/TopNavBar";
 import { getPostsOfThisUser } from "@/src/util/postApi";
 import { PostSkeleton } from "@/src/skeleton/PostSkeleton";
+import { UserSkeleton } from "@/src/skeleton/UserSkeleton";
+import { getCurrentUser, setCurrentUserFromDB } from "@/src/util/utilFunctions";
+import { useDispatch } from "react-redux";
+import { setCurrentUser } from "@/src/redux/slices/currentUser";
 
 const Profile = () => {
   const location = useLocation();
   const [user, setUser] = useState({});
   const [posts, setPosts] = useState([]);
+  const currentUser = getCurrentUser();
+  const dispatch = useDispatch();
 
   const callGetUser = () => {
     getUser(location.state.userId)
@@ -29,6 +35,20 @@ const Profile = () => {
         setPosts(res.data);
       })
       .catch((err) => console.log(err));
+  };
+
+  const followUser = () => {
+    followThisUser(user._id, { currentUser: currentUser._id }).then((res) => {
+      setCurrentUserFromDB().then(dispatch(setCurrentUser(res.data)));
+      callGetUser();
+    });
+  };
+
+  const unFollowUser = () => {
+    unFollowThisUser(user._id, { currentUser: currentUser._id }).then((res) => {
+      setCurrentUserFromDB().then(dispatch(setCurrentUser(res.data)));
+      callGetUser();
+    });
   };
 
   useEffect(() => {
@@ -52,9 +72,21 @@ const Profile = () => {
             <div className="flex flex-col gap-2 w-full">
               <div className="flex items-center justify-center gap-4 max-[300px]:flex-col">
                 <div className="text-[1.3rem]">{`${user.fName} ${user.lName}`}</div>
-                <Button className="bg-[#0e92f1] h-9 hover:bg-[#0a6bb1] ">
-                  Follow
-                </Button>
+                {currentUser.following.includes(user._id) ? (
+                  <Button
+                    className="bg-[#333] text-red-500 h-9"
+                    onClick={unFollowUser}
+                  >
+                    Un Follow
+                  </Button>
+                ) : (
+                  <Button
+                    className=" bg-[#0e92f1] h-9 hover:bg-[#0a6bb1]"
+                    onClick={followUser}
+                  >
+                    Follow
+                  </Button>
+                )}
               </div>
               <div className="flex gap-8 justify-center max-[375px]:hidden">
                 <div className="flex flex-col items-center">
@@ -66,14 +98,14 @@ const Profile = () => {
                   <div className="text-[#aeaeae]">Followers</div>
                 </div>
                 <div className="flex flex-col items-center">
-                  <div>{user?.followers?.length}</div>
+                  <div>{user?.following?.length}</div>
                   <div className="text-[#aeaeae]">Following</div>
                 </div>
               </div>
             </div>
           </div>
         ) : (
-          ""
+          <UserSkeleton />
         )}
         {user?.bio?.length ? (
           <div className="px-1 my-4">{user?.bio}</div>
@@ -91,7 +123,7 @@ const Profile = () => {
               <div className="text-[#aeaeae]">Followers</div>
             </div>
             <div className="flex flex-col items-center">
-              <div>{user?.followers?.length}</div>
+              <div>{user?.following?.length}</div>
               <div className="text-[#aeaeae]">Following</div>
             </div>
           </div>

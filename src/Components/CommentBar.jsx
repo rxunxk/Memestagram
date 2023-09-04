@@ -9,6 +9,7 @@ import { getCurrentUser } from "../util/utilFunctions";
 import { Input } from "@/components/ui/input";
 import { BsCheckSquareFill } from "react-icons/bs";
 import { ImCross } from "react-icons/im";
+import { useNavigate } from "react-router-dom";
 
 const CommentBar = ({
   comment,
@@ -16,13 +17,13 @@ const CommentBar = ({
   setDeleteAlert,
   setCurrCommentId,
 }) => {
-  // const [user, setUser] = useState();
   const [currComment, setCurrComment] = useState(comment);
   const [liked, setLiked] = useState(
     currComment?.likedBy?.includes(currentUser?._id)
   );
   const [val, setVal] = useState(currComment?.comment);
   const [isEditing, setIsEditing] = useState(false);
+  const navigate = useNavigate();
 
   const user = getCurrentUser();
 
@@ -51,10 +52,20 @@ const CommentBar = ({
       <div className="flex gap-[10px]">
         <img
           src={currComment?.userProfilePic}
-          className="h-[35px] w-[35px] rounded-[50%] mt-[5px]"
+          className="h-[35px] w-[35px] rounded-[50%] mt-[5px] cursor-pointer"
+          onClick={() => {
+            navigate("/Profile", { state: { userId: currComment.userId } });
+          }}
         />
         <div className="flex flex-col items-start">
-          <div className="font-bold">{currComment?.userName}</div>
+          <div
+            onClick={() => {
+              navigate("/Profile", { state: { userId: currComment.userId } });
+            }}
+            className="font-bold cursor-pointer"
+          >
+            {currComment?.userName}
+          </div>
           {isEditing ? (
             <Input
               type="text"

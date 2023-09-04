@@ -71,7 +71,7 @@ const BottomNavBar = () => {
           <DropdownMenuItem
             className="hover:bg-[#27272a] text-red-400"
             onClick={() => {
-              dispatch(setLogoutDialog());
+              dispatch(setLogoutDialog(true));
             }}
           >
             Logout

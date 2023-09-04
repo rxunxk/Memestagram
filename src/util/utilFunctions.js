@@ -1,3 +1,5 @@
+import { getUser } from "./userApi";
+
 export const getRandomDateAndTime = () => {
   let day = Math.floor(Math.random() * (30 - 1 + 1)) + 1;
   let month = Math.floor(Math.random() * (12 - 1 + 1)) + 1;
@@ -23,3 +25,8 @@ export const getRandomDateAndTime = () => {
 
 export const getCurrentUser = () =>
   JSON.parse(localStorage.getItem("currentUser"));
+
+export const setCurrentUserFromDB = async () =>
+  getUser(getCurrentUser()._id).then((res) => {
+    localStorage.setItem("currentUser", JSON.stringify(res.data));
+  });

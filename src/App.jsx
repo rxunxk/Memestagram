@@ -22,7 +22,7 @@ function App() {
       <Dialog
         open={logout}
         onOpenChange={() => {
-          dispatch(setLogoutDialog());
+          dispatch(setLogoutDialog(false));
         }}
       >
         <DialogContent className="bg-black text-white border-[#27272a]">
@@ -41,6 +41,7 @@ function App() {
               className="bg-black border-0 hover:bg-[#27272a] text-red-400"
               onClick={() => {
                 localStorage.removeItem("currentUser");
+                dispatch(setLogoutDialog(false));
                 navigate("/");
               }}
             >
