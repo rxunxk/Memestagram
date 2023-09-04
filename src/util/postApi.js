@@ -34,3 +34,9 @@ export const getPostsOfThisUser = async (userId) =>
   await axios.get(
     `https://memestagram-io-server.vercel.app/posts/user/${userId}`
   );
+
+export const updatePost = async (postId, data) =>
+  await axios.patch(
+    `https://memestagram-io-server.vercel.app/posts/update/${postId}`,
+    data
+  );

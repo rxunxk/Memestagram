@@ -26,9 +26,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import PropTypes from "prop-types";
-import { likePost, dislikePost, deletePost } from "../util/postApi";
+import { likePost, dislikePost, deletePost, updatePost } from "../util/postApi";
 import { getTotalCommentsForPost } from "../util/commentApi";
 import { useNavigate } from "react-router-dom";
+import { Input } from "@/components/ui/input";
+import { BsCheckSquareFill } from "react-icons/bs";
+import { ImCross } from "react-icons/im";
 
 const Post = ({ post, currentUser, setPostId, setShowComments, popPost }) => {
   const [currPost, setCurrPost] = useState(post);
@@ -37,6 +40,9 @@ const Post = ({ post, currentUser, setPostId, setShowComments, popPost }) => {
   );
   const [totalComments, setTotalComments] = useState(post?.comments?.length);
   const navigate = useNavigate();
+  const [isEditing, setIsEditing] = useState(false);
+  const [titleVal, setTitleVal] = useState(currPost.title);
+  const [captionVal, setCaptionVal] = useState(currPost.caption);
 
   useEffect(() => {
     getTotalCommentsForPost(currPost._id).then((res) => {
@@ -118,22 +124,46 @@ const Post = ({ post, currentUser, setPostId, setShowComments, popPost }) => {
               </PostMenuBtn>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="border border-[#27272a] bg-black text-white">
-              <DropdownMenuItem className="hover:bg-[#27272a]">
-                Edit
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                className="hover:bg-[#27272a] text-red-600"
-                onClick={deletePostHandler}
-              >
-                Delete
-              </DropdownMenuItem>
+              {currPost.userId === currentUser._id ? (
+                <>
+                  <DropdownMenuItem
+                    className="hover:bg-[#27272a]"
+                    onClick={() => {
+                      setIsEditing(true);
+                    }}
+                  >
+                    Edit
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    className="hover:bg-[#27272a] text-red-600"
+                    onClick={deletePostHandler}
+                  >
+                    Delete
+                  </DropdownMenuItem>
+                </>
+              ) : (
+                ""
+              )}
               <DropdownMenuItem className="hover:bg-[#27272a]">
                 Save Post
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </PostHeader>
-        <PostTitle>{currPost.title}</PostTitle>
+        <PostTitle>
+          {isEditing ? (
+            <Input
+              type="text"
+              value={titleVal}
+              onChange={(e) => {
+                setTitleVal(e.target.value);
+              }}
+              className="text-[#a1a1aa] w-full bg-black border border-[#27272a] mb-2"
+            />
+          ) : (
+            currPost.title
+          )}
+        </PostTitle>
         <PostMedia
           src={`${currPost.img}`}
           className="border border-[#262626]"
@@ -162,9 +192,51 @@ const Post = ({ post, currentUser, setPostId, setShowComments, popPost }) => {
           <SaveIcon />
         </PostFooter>
         {currPost.caption ? (
-          <div>
-            <span className="font-bold">{`${currPost.author} `}</span>
-            {currPost.caption}
+          isEditing ? (
+            <Input
+              type="text"
+              value={captionVal}
+              onChange={(e) => {
+                setCaptionVal(e.target.value);
+              }}
+              className="text-[#a1a1aa] w-full bg-black border border-[#27272a] mb-2"
+            />
+          ) : (
+            <div>
+              <span className="font-bold">{`${currPost.author} `}</span>
+              {currPost.caption}
+            </div>
+          )
+        ) : (
+          ""
+        )}
+        {isEditing ? (
+          <div className="flex gap-4">
+            <div>
+              <BsCheckSquareFill
+                className="text-green-300 h-[16px] w-[16px] cursor-pointer"
+                onClick={() => {
+                  setIsEditing(false);
+                  updatePost(currPost._id, {
+                    title: titleVal,
+                    caption: captionVal,
+                  })
+                    .then((res) => {
+                      console.log(res);
+                      setCurrPost(res.data);
+                    })
+                    .catch((err) => console.log(err));
+                }}
+              />
+            </div>
+            <div>
+              <ImCross
+                className="text-red-500 h-[16px] w-[16px] cursor-pointer"
+                onClick={() => {
+                  setIsEditing(false);
+                }}
+              />
+            </div>
           </div>
         ) : (
           ""
