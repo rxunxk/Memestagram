@@ -54,11 +54,11 @@ const Create = () => {
 
   return (
     <>
-      <div className="h-screen w-screen flex flex-col items-center justify-center bg-black text-white  overflow-auto">
+      <div className="h-screen w-screen flex flex-col items-center justify-start bg-black text-white  overflow-auto">
         <TopNavBar />
         <Sidebar />
         <BottomNavBar />
-        <Card className="w-[600px] max-w-[80%] bg-black text-white rounded-md border py-2 border-[#27272a]">
+        <Card className="w-[600px] max-w-[95%]  bg-black text-white rounded-md mt-[80px] mb-[70px] border py-2 border-[#27272a]">
           <CardHeader>
             <CardTitle>Create New Post</CardTitle>
           </CardHeader>
@@ -94,7 +94,7 @@ const Create = () => {
               <div className="flex w-full justify-center bg-black">
                 <img
                   src={preview}
-                  className="max-h-[510px] bg-black border border-[#333] mt-4 rounded-[10px]"
+                  className=" border border-[#333] mt-4 rounded-[10px]"
                 />
               </div>
             </div>

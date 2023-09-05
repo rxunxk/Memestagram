@@ -6,3 +6,6 @@ export const registerUser = (data) => {
     data
   );
 };
+
+export const loginUser = (data) =>
+  axios.post("https://memestagram-io-server.vercel.app/auth/login", data);

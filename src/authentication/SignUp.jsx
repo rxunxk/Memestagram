@@ -19,6 +19,7 @@ import { useForm } from "react-hook-form";
 export default function SignUp() {
   const navigate = useNavigate();
   const [signUpDisable, setSignUpDisable] = useState(false);
+  const [preview, setPreview] = useState();
   const { register, handleSubmit } = useForm();
 
   const onSubmit = async (fData) => {
@@ -67,8 +68,8 @@ export default function SignUp() {
   };
 
   return (
-    <div className="w-screen h-screen flex justify-center items-center">
-      <Card className="w-[600px] h-[600px] mx-2">
+    <div className="w-screen h-screen flex justify-center items-start bg-black text-white  overflow-auto">
+      <Card className="w-[600px] max-w-[95%]  bg-black text-white rounded-md mt-[80px] mb-[70px] border py-2 border-[#27272a]">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl">Create an account</CardTitle>
           <CardDescription>
@@ -79,6 +80,7 @@ export default function SignUp() {
           <div className="flex flex-col gap-2">
             <Label htmlFor="fName">First Name</Label>
             <Input
+              className="text-[#a1a1aa] w-full bg-black border border-[#27272a] mb-2"
               id="name"
               type="text"
               placeholder="First Name"
@@ -90,6 +92,7 @@ export default function SignUp() {
           <div className="flex flex-col gap-2">
             <Label htmlFor="fName">Last Name</Label>
             <Input
+              className="text-[#a1a1aa] w-full bg-black border border-[#27272a] mb-2"
               id="name"
               type="text"
               placeholder="Last Name"
@@ -101,6 +104,7 @@ export default function SignUp() {
           <div className="flex flex-col gap-2">
             <Label htmlFor="email">Email</Label>
             <Input
+              className="text-[#a1a1aa] w-full bg-black border border-[#27272a] mb-2"
               id="email"
               type="email"
               placeholder="m@example.com"
@@ -112,6 +116,7 @@ export default function SignUp() {
           <div className="flex flex-col gap-2">
             <Label htmlFor="password">Password</Label>
             <Input
+              className="text-[#a1a1aa] w-full bg-black border border-[#27272a] mb-2"
               id="password"
               type="password"
               placeholder="password"
@@ -123,14 +128,30 @@ export default function SignUp() {
           <div className="flex flex-col gap-2">
             <Label htmlFor="password">Profile Picture</Label>
             <Input
+              className="text-black bg-white w-full"
               id="password"
               type="file"
-              {...register("signUpForm.profilePicture", {})}
+              {...register("signUpForm.profilePicture", {
+                required: true,
+                onChange: (e) => {
+                  setPreview(URL.createObjectURL(e.target.files[0]));
+                },
+              })}
+            />
+          </div>
+          <div className="flex w-full justify-center bg-black">
+            <img
+              src={preview}
+              className=" border border-[#333] mt-4 rounded-[10px]"
             />
           </div>
         </CardContent>
         <CardFooter>
-          <Button onClick={handleSubmit(onSubmit)} disabled={signUpDisable}>
+          <Button
+            className="bg-[#27272a] hover:bg-[#212123] w-full"
+            onClick={handleSubmit(onSubmit)}
+            disabled={signUpDisable}
+          >
             Submit
           </Button>
         </CardFooter>

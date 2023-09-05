@@ -1,50 +1,28 @@
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Link as RouterLink } from "react-router-dom";
-// import { useEffect } from "react";
-import axios from "axios";
+/* eslint-disable react/no-unescaped-entities */
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setCurrentUser } from "../redux/slices/currentUser";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getCurrentUser } from "../util/utilFunctions";
-
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
-// TODO remove, this demo shouldn't need to reset the theme.
-
-const defaultTheme = createTheme();
+import { useForm } from "react-hook-form";
+import { loginUser } from "../util/authApi";
 
 export default function SignIn() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [signInDisable, setSignInDisable] = useState(false);
+  const { register, handleSubmit } = useForm();
 
   useEffect(() => {
     const currentUser = getCurrentUser();
@@ -54,19 +32,12 @@ export default function SignIn() {
     }
   }, []);
 
-  /* Sign In Button Handler */
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    login({ email: data.get("email"), password: data.get("password") });
-  };
-
-  function login(data) {
-    axios
-      .post("https://memestagram-io-server.vercel.app/auth/login", {
-        email: data.email,
-        password: data.password,
-      })
+  const onSubmit = (fData) => {
+    setSignInDisable(true);
+    loginUser({
+      email: fData.signInForm.email,
+      password: fData.signInForm.password,
+    })
       .then((res) => {
         if (res) {
           localStorage.setItem("currentUser", JSON.stringify(res.data));
@@ -75,82 +46,65 @@ export default function SignIn() {
         }
       })
       .catch((err) => console.log(err.response.data));
-  }
+  };
 
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
-          </Typography>
-          <Box
-            component="form"
-            onSubmit={handleSubmit}
-            noValidate
-            sx={{ mt: 1 }}
-          >
-            <TextField
-              margin="normal"
-              required
-              fullWidth
+    <div className="w-screen h-screen flex justify-center items-start bg-black text-white  overflow-auto">
+      <Card className="w-[600px] max-w-[95%]  bg-black text-white rounded-md mt-[80px] mb-[70px] border py-2 border-[#27272a]">
+        <CardHeader className="space-y-1">
+          <CardTitle className="text-2xl">Sign In</CardTitle>
+          <CardDescription>
+            Enter your email & password to login to Memestagram
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="email">Email</Label>
+            <Input
+              className="text-[#a1a1aa] w-full bg-black border border-[#27272a] mb-2"
               id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
+              type="email"
+              placeholder="m@example.com"
+              {...register("signInForm.email", {
+                required: true,
+              })}
             />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
+          </div>
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="password">Password</Label>
+            <Input
+              className="text-[#a1a1aa] w-full bg-black border border-[#27272a] mb-2"
               id="password"
-              autoComplete="current-password"
+              type="password"
+              placeholder="password"
+              {...register("signInForm.password", {
+                required: true,
+              })}
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
+          </div>
+        </CardContent>
+        <CardFooter>
+          <div className="flex flex-col gap-2 w-full">
             <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              className="bg-[#27272a] hover:bg-[#212123] w-full"
+              onClick={handleSubmit(onSubmit)}
+              disabled={signInDisable}
             >
-              Sign In
+              Login
             </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <RouterLink to="/SignUp">
-                  <Link href="#" variant="body2">
-                    {"Don't have an account? Sign Up"}
-                  </Link>
-                </RouterLink>
-              </Grid>
-            </Grid>
-          </Box>
-        </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
-      </Container>
-    </ThemeProvider>
+            <div className="flex justify-end">
+              <div
+                className="cursor-pointer hover:text-[#c1c1c1]"
+                onClick={() => {
+                  navigate("/SignUp");
+                }}
+              >
+                Don't have an account? Sign Up
+              </div>
+            </div>
+          </div>
+        </CardFooter>
+      </Card>
+    </div>
   );
 }
